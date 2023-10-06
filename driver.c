@@ -79,15 +79,14 @@ static int my_driver_init(void){
 	printk(KERN_INFO "device node created ... !");
 
 	gpio_b_gdir_vm	= ioremap(gpio_b_gdir, sizeof(u32));
-/*/1* */
+
 	static struct device_driver drv_serial = {
 		.name = "serial_drv_tst",
 		.owner = "Arun jyothish k",
 		.shutdown = &shutdown,
 	};
 */
-	*/
-	iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
+	/* iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led */ 
 	return 0;
 
 }
@@ -99,12 +98,15 @@ static void shutdown(void){
 
 
 static void  my_driver_exit(void){
+	/*
 	device_destroy(my_class, MKDEV(major,0));
 	class_unregister(my_class);
 	class_destroy(my_class);
 	unregister_chrdev(major, DEVICE_NAME);
 	iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn on led 
 	iounmap(gpio_b_gdir_vm);
+	*/
+	device_destroy(my_class, MKDEV(major,0));
 	printk(KERN_INFO "Module exit fn");
 }
 

@@ -24,6 +24,7 @@ static int major	;
 
 // fn prototype
 /* int __init driver_init(void); */
+static void setup (void);
 static ssize_t read_fn (struct file *, char *, size_t, loff_t *);
 static ssize_t write_fn (struct file *, const char *, size_t, loff_t *);
 static int open_fn (struct inode *, struct file *);
@@ -79,16 +80,23 @@ static int my_driver_init(void){
 	}
 	printk(KERN_INFO "device node created ... !");
 
-	gpio_b_gdir_vm	= ioremap(gpio_b_gdir, sizeof(u32));
-	gpio_b_dr_vm	= ioremap(gpio_b_dr, sizeof(u32));
-/*
+	/*
 	static struct device_driver drv_serial = {
 		.name = "serial_drv_tst",
 		.owner = "Arun jyothish k",
 		.shutdown = &shutdown,
 	};
-*/
+	*/
+	
+	gpio_b_gdir_vm	= ioremap(gpio_b_gdir, sizeof(u32));
+	setup ();
+	gpio_b_gdir_vm	= ioremap(gpio_b_gdir, sizeof(u32));
+	gpio_b_dr_vm	= ioremap(gpio_b_dr, sizeof(u32));
 	iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
+/*
+	iounmap(gpio_b_dr_vm);
+	iounmap(gpio_b_gdir_vm);
+*/
 	return 0;
 
 }
@@ -100,6 +108,8 @@ static void shutdown(void){
 
 
 static void  my_driver_exit(void){
+	iounmap(gpio_b_dr_vm);
+	iounmap(gpio_b_gdir_vm);
 	/*
 	printk(KERN_INFO "Module exit fn called\n");
 	class_unregister(my_class);
@@ -125,11 +135,35 @@ static ssize_t write_fn (struct file *fl, const char *ch, size_t e, loff_t *oth)
 }
 
 static int open_fn (struct inode *lk, struct file *kl){
+
+	/*
+	gpio_b_gdir_vm	= ioremap(gpio_b_gdir, sizeof(u32));
+	gpio_b_dr_vm	= ioremap(gpio_b_dr, sizeof(u32));
+	*/
 	iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
 	return 0;
 }
 
 static int release_fn(struct inode *lk, struct file *kl){
+	/*
+	iounmap(gpio_b_dr_vm);
+	iounmap(gpio_b_gdir_vm);
+	*/
 	iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
 	return 0;
+}
+
+static void setup (void){
+
+#define mask_pin 0b1 << led_blue_pin
+		 /* iowrite32( 67108864 , gpio_b_gdir_vm);		// sets led pin as output */
+		 /* iowrite32(0b0 << button_pin , gpio_b_gdir_vm);		// sets button pin as input */
+											//
+		 u32 read  = ioread32(gpio_b_gdir_vm);		//  
+		 /* printk(KERN_INFO "gdir gp3: %x",mask_pin); */
+		 printk(KERN_INFO "reg val: %x",read);
+
+		 iowrite32( mask_pin , gpio_b_gdir_vm);		// sets led pin as output
+		 read  = ioread32(gpio_b_gdir_vm);		//  
+		 printk(KERN_INFO "reg val: %x",read);
 }
