@@ -89,9 +89,8 @@ static int my_driver_init(void){
 	*/
 	
 	gpio_b_gdir_vm	= ioremap(gpio_b_gdir, sizeof(u32));
-	setup ();
-	gpio_b_gdir_vm	= ioremap(gpio_b_gdir, sizeof(u32));
 	gpio_b_dr_vm	= ioremap(gpio_b_dr, sizeof(u32));
+	setup ();
 	iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
 /*
 	iounmap(gpio_b_dr_vm);
@@ -110,15 +109,12 @@ static void shutdown(void){
 static void  my_driver_exit(void){
 	iounmap(gpio_b_dr_vm);
 	iounmap(gpio_b_gdir_vm);
-	/*
 	printk(KERN_INFO "Module exit fn called\n");
 	class_unregister(my_class);
 	class_destroy(my_class);
 	unregister_chrdev(major, DEVICE_NAME);
 	device_destroy(my_class, MKDEV(major,0));
 	iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn on led 
-	iounmap(gpio_b_gdir_vm);
-	*/
 	printk(KERN_INFO "Module exit fn");
 }
 
@@ -126,10 +122,12 @@ module_init(my_driver_init);
 module_exit(my_driver_exit);
 
 static ssize_t read_fn (struct file *fl, char * ch, size_t e, loff_t *oth){
+	printk(KERN_INFO "read_fn called !");
 	iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
 	return 9;
 }
 static ssize_t write_fn (struct file *fl, const char *ch, size_t e, loff_t *oth){
+	printk(KERN_INFO "write_fn called !");
 	iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn on led 
 	return 9;
 }
@@ -140,7 +138,9 @@ static int open_fn (struct inode *lk, struct file *kl){
 	gpio_b_gdir_vm	= ioremap(gpio_b_gdir, sizeof(u32));
 	gpio_b_dr_vm	= ioremap(gpio_b_dr, sizeof(u32));
 	*/
-	iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
+	/* iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led */ 
+	
+	printk(KERN_INFO "open_fn called !");
 	return 0;
 }
 
@@ -149,7 +149,8 @@ static int release_fn(struct inode *lk, struct file *kl){
 	iounmap(gpio_b_dr_vm);
 	iounmap(gpio_b_gdir_vm);
 	*/
-	iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
+	/* iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led */ 
+	printk(KERN_INFO "close_fn called !");
 	return 0;
 }
 
