@@ -114,8 +114,10 @@ module_init(my_driver_init);
 module_exit(my_driver_exit);
 
 static ssize_t read_fn (struct file *fl, char * ch, size_t e, loff_t *oth){
+	char msg[] = "Turn off LED";
 	iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
-	return 0;
+	ch = msg;
+	return sizeof(msg);
 }
 static ssize_t write_fn (struct file *fl, const char *ch, size_t e, loff_t *oth){
 	iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn on led 

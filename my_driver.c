@@ -27,6 +27,7 @@ static int major	;
 static void setup (void);
 static ssize_t read_fn (struct file *, char *, size_t, loff_t *);
 static ssize_t write_fn (struct file *, const char *, size_t, loff_t *);
+/* static ssize_t (* write) (struct file *, const char *, size_t, loff_t *); */
 static int open_fn (struct inode *, struct file *);
 static int release_fn (struct inode *, struct file *);
 /* void device_release(void); */
@@ -124,7 +125,7 @@ module_exit(my_driver_exit);
 static ssize_t read_fn (struct file *fl, char * ch, size_t e, loff_t *oth){
 	printk(KERN_INFO "read_fn called !");
 	iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
-	return 9;
+	return 0;
 }
 static ssize_t write_fn (struct file *fl, const char *ch, size_t e, loff_t *oth){
 	printk(KERN_INFO "write_fn called !");
