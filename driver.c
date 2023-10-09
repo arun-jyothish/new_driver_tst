@@ -1,4 +1,5 @@
 #include <linux/kernel.h>
+#include <linux/string.h>
 #include <linux/module.h>
 #include <linux/device.h>
 #include <linux/init.h>
@@ -98,14 +99,12 @@ static void shutdown(void){
 
 
 static void  my_driver_exit(void){
-	/*
 	device_destroy(my_class, MKDEV(major,0));
 	class_unregister(my_class);
 	class_destroy(my_class);
 	unregister_chrdev(major, DEVICE_NAME);
 	iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn on led 
 	iounmap(gpio_b_gdir_vm);
-	*/
 	device_destroy(my_class, MKDEV(major,0));
 	printk(KERN_INFO "Module exit fn");
 }
@@ -120,7 +119,12 @@ static ssize_t read_fn (struct file *fl, char * ch, size_t e, loff_t *oth){
 	return sizeof(msg);
 }
 static ssize_t write_fn (struct file *fl, const char *ch, size_t e, loff_t *oth){
-	iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn on led 
+	if (! strcmp("LED_ON",ch)){
+		iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn on led 
+	}
+	else if (! strcmp("LED_OFF",ch)){
+		iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
+	}
 	return 0;
 }
 

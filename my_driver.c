@@ -1,5 +1,6 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
+#include <linux/string.h>
 #include <linux/device.h>
 #include <linux/init.h>
 #include <linux/fs.h>
@@ -111,11 +112,11 @@ static void  my_driver_exit(void){
 	iounmap(gpio_b_dr_vm);
 	iounmap(gpio_b_gdir_vm);
 	printk(KERN_INFO "Module exit fn called\n");
-	class_unregister(my_class);
-	class_destroy(my_class);
-	unregister_chrdev(major, DEVICE_NAME);
 	device_destroy(my_class, MKDEV(major,0));
-	iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn on led 
+	unregister_chrdev(major, DEVICE_NAME);
+	class_destroy(my_class);
+	class_unregister(my_class);
+	/* iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn on led */ 
 	printk(KERN_INFO "Module exit fn");
 }
 
@@ -128,9 +129,14 @@ static ssize_t read_fn (struct file *fl, char * ch, size_t e, loff_t *oth){
 	return 0;
 }
 static ssize_t write_fn (struct file *fl, const char *ch, size_t e, loff_t *oth){
-	printk(KERN_INFO "write_fn called !");
+	int sz = sizeof(ch);
+	printk(KERN_INFO "write_fn called ! cmd len: %d",sz);
+	printk(KERN_INFO "cmd: %s\n",ch);
+	if ( !strncmp("ON",ch ,2 ))
 	iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn on led 
-	return 9;
+	if ( !strncmp("OFF",ch,3 ) )
+	iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
+	return sz;
 }
 
 static int open_fn (struct inode *lk, struct file *kl){
