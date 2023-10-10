@@ -100,7 +100,7 @@ static int my_driver_init(void){
 	gpio_b_gdir_vm	= ioremap(gpio_b_gdir, sizeof(u32));
 	gpio_b_dr_vm	= ioremap(gpio_b_dr, sizeof(u32));
 	setup ();
-	/* iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led */ 
+	iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
 	return 0;
 
 }
