@@ -19,11 +19,11 @@ static long ioctl_fn(struct file *fl,unsigned int cmd, unsigned long arg){
 	switch(cmd){
 		case ON:
 			iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn on led 
-			iowrite32( 0b0 << led_red_pin, gpio_b_dr_vm);		// turn on led 
+			iowrite32( 0b0 << led_red_pin, gpio_r_dr_vm);		// turn on led 
 			break;	
 		case OFF:
 			iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
-			iowrite32( 0b1 << led_red_pin, gpio_b_dr_vm);		// turn off led 
+			iowrite32( 0b1 << led_red_pin, gpio_r_dr_vm);		// turn off led 
 			break;	
 	}
 	return 0;
@@ -59,18 +59,17 @@ static int my_driver_init(void){
 
 	mapIo();
 	setup ();
-	ledAll(0);
+	ledAll(LIGHT_OFF);
 	unMap();
-	return 0;
+	return INIT_SUCC;
 
 }
 static void  my_driver_exit(void){
 	mapIo();
-	ledAll(1);								// turn on all led
-	iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn on led 
-	/* iowrite32( 0b1 << led_yellow_pin, gpio_y_dr_vm);		// turn on led */ 
-	iowrite32( 0b1 << led_red_pin, gpio_r_dr_vm);		// turn on led 
+	setup ();
+	ledAll(LIGHT_ON);								// turn on all led
 	unMap();
+
 	printk(KERN_INFO "Module exit fn called\n");
 	device_destroy(my_class, MKDEV(major,0));
 	unregister_chrdev(major, DEVICE_NAME);

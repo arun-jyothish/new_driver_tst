@@ -22,6 +22,18 @@
 #define 	ON		_IOW('d','b', int32_t *)
 #define 	OFF		_IOW('d','c', int32_t *)
 
+#define 	LIGHT_ON	1	
+#define 	LIGHT_OFF	0	
+
+static enum status{
+	OPEN_SUCC = 8001,
+	OPEN_FAIL,
+	READ_SUCC,
+	READ_FAIL,
+	WRITE_SUCC,
+	WRITE_FAIL,
+	INIT_SUCC,
+};
 
 // global var
 static void __iomem*		gpio_b_gdir_vm;
@@ -46,6 +58,7 @@ static long ioctl_fn(struct file *fl,unsigned int cmd, unsigned long arg);
 static void unMap(void );
 static void mapIo(void );
 static void ledAll( int arg );
+
 
 static struct file_operations fops = {
 owner: THIS_MODULE,
