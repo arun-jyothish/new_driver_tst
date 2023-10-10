@@ -7,67 +7,9 @@
 #include <linux/ioctl.h>
 #include <linux/fs.h>
 #include <linux/io.h>
+#include "my_driver.h"
 
 
-// define .begin
-#define	gpio_b_base_addr	(0x20A4000)
-#define	gpio_y_base_addr	(0x20B4000)
-#define	gpio_r_base_addr	(0x209C000)
-#define		gpio_b_dr			gpio_b_base_addr
-#define		gpio_y_dr			gpio_y_base_addr
-#define		gpio_r_dr			gpio_r_base_addr
-#define		gpio_b_gdir			(gpio_b_base_addr+0x04)
-#define		gpio_y_gdir			(gpio_y_base_addr+0x04)
-#define		gpio_r_gdir			(gpio_r_base_addr+0x04)
-
-#define 	led_blue_pin		(26)
-#define 	led_yellow_pin		(8)
-#define 	led_red_pin			(24)
-
-#define 	WR_VALUE	_IOW('d','a', int32_t *)
-#define 	RD_VALUE	_IOW('d','b', int32_t *)
-#define 	ON		_IOW('d','b', int32_t *)
-#define 	OFF		_IOW('d','c', int32_t *)
-
-
-// global var
-static void __iomem*		gpio_b_gdir_vm;
-static void __iomem*		gpio_b_dr_vm  ;
-static void __iomem*		gpio_y_gdir_vm;
-static void __iomem*		gpio_y_dr_vm  ;
-static void __iomem*		gpio_r_gdir_vm;
-static void __iomem*		gpio_r_dr_vm  ;
-
-static struct device * my_device ;
-static struct class * my_class ;
-static int major	;
-static char str_cmd [20] ;
-
-// fn prototype
-static void setup (void);
-static ssize_t read_fn (struct file *, char *, size_t, loff_t *);
-static ssize_t write_fn (struct file *, const char *, size_t, loff_t *);
-static int open_fn (struct inode *, struct file *);
-static int release_fn (struct inode *, struct file *);
-static long ioctl_fn(struct file *fl,unsigned int cmd, unsigned long arg);
-
-static struct file_operations fops = {
-	owner: THIS_MODULE,
-	read : read_fn,
-	write : write_fn,
-	open : open_fn,
-	release : release_fn,
-	unlocked_ioctl : ioctl_fn
-};
-
-#define DEVICE_NAME  "my_driver"
-#define DEVICE_CLASS "my_driver_class" 
-
-
-MODULE_LICENSE("GPL");
-MODULE_AUTHOR("ARUN JYOTHISH K");
-MODULE_DESCRIPTION(" device description my device driver .. ");
-MODULE_VERSION("1.0");
 
 // fn definition 
 
@@ -77,90 +19,78 @@ static long ioctl_fn(struct file *fl,unsigned int cmd, unsigned long arg){
 	switch(cmd){
 		case ON:
 			iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn on led 
+			iowrite32( 0b0 << led_red_pin, gpio_b_dr_vm);		// turn on led 
 			break;	
 		case OFF:
 			iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
+			iowrite32( 0b1 << led_red_pin, gpio_b_dr_vm);		// turn off led 
 			break;	
 	}
 	return 0;
 }
 
 static int my_driver_init(void){
-	printk(KERN_INFO "Module intit fn");
+	printk(KERN_INFO "Module intit fn\n");
 	major = register_chrdev(	0,DEVICE_NAME , &fops);
 	if (major < 0 ){
-	printk(KERN_INFO "Driver register failed\n");
-	return major;
+		printk(KERN_INFO "Driver register failed\n");
+		return major;
 	}
-	printk(KERN_INFO "My_driver Major NO: %d",major);
-///		create class
+	printk(KERN_INFO "My_driver Major NO: %d\n",major);
+	///		create class
 	my_class = class_create( THIS_MODULE, DEVICE_CLASS );
 	if ( IS_ERR( my_class ) ){
 		unregister_chrdev ( major , DEVICE_NAME );
-		printk(KERN_ALERT "My_driver CLASS CREATE FAILED");
+		printk(KERN_ALERT "My_driver CLASS CREATE FAILED\n");
 		return PTR_ERR(my_class);
 	}
-	printk(KERN_INFO "My_driver class created ");
+	printk(KERN_INFO "My_driver class created \n");
 
-///		create device 
+	///		create device 
 	my_device = device_create( my_class, NULL ,MKDEV(major,0), NULL, DEVICE_NAME );
 	if ( IS_ERR( my_device ) ){
 		class_destroy( my_class );
 		unregister_chrdev ( major , DEVICE_NAME );
-		printk(KERN_ALERT "My_driver DEVICE CREATE FAILED");
+		printk(KERN_ALERT "My_driver DEVICE CREATE FAILED\n");
 		return PTR_ERR(my_device);
 	}
-	printk(KERN_INFO "device node created ... !");
-	
-	gpio_b_gdir_vm	= ioremap(gpio_b_gdir, sizeof(u32));
-	gpio_y_gdir_vm	= ioremap(gpio_y_gdir, sizeof(u32));
-	gpio_r_gdir_vm	= ioremap(gpio_r_gdir, sizeof(u32));
+	printk(KERN_INFO "device node created ... !\n");
 
-	gpio_b_dr_vm	= ioremap(gpio_b_dr, sizeof(u32));
-	gpio_y_dr_vm	= ioremap(gpio_y_dr, sizeof(u32));
-	gpio_r_dr_vm	= ioremap(gpio_r_dr, sizeof(u32));
 
+	mapIo();
 	setup ();
-	iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
-	iowrite32( 0b0 << led_yellow_pin, gpio_y_dr_vm);		// turn off led 
-	iowrite32( 0b0 << led_red_pin, gpio_r_dr_vm);		// turn off led 
+	ledAll(0);
+	unMap();
 	return 0;
 
 }
-
 static void  my_driver_exit(void){
+	mapIo();
+	ledAll(1);								// turn on all led
 	iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn on led 
-	iowrite32( 0b1 << led_yellow_pin, gpio_y_dr_vm);		// turn on led 
+	/* iowrite32( 0b1 << led_yellow_pin, gpio_y_dr_vm);		// turn on led */ 
 	iowrite32( 0b1 << led_red_pin, gpio_r_dr_vm);		// turn on led 
-
-	iounmap(gpio_b_dr_vm);
-	iounmap(gpio_y_dr_vm);
-	iounmap(gpio_r_dr_vm);
-
-	iounmap(gpio_b_gdir_vm);
-	iounmap(gpio_y_gdir_vm);
-	iounmap(gpio_r_gdir_vm);
-
+	unMap();
 	printk(KERN_INFO "Module exit fn called\n");
 	device_destroy(my_class, MKDEV(major,0));
 	unregister_chrdev(major, DEVICE_NAME);
 	class_destroy(my_class);
 	class_unregister(my_class);
-	printk(KERN_INFO "Module exit fn");
+	printk(KERN_INFO "Module exit fn\n");
 }
 
 module_init(my_driver_init);
 module_exit(my_driver_exit);
 
 static ssize_t read_fn (struct file *fl, char * ch, size_t e, loff_t *oth){
-	printk(KERN_INFO "read_fn called !");
+	printk(KERN_INFO "read_fn called !\n");
 	copy_to_user(ch , str_cmd , sizeof(str_cmd));
 	iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
 	return 0;
 }
 static ssize_t write_fn (struct file *fl, const char *ch, size_t e, loff_t *oth){
 	int sz = sizeof(ch);
-	printk(KERN_INFO "write_fn called ! cmd len: %d",sz);
+	printk(KERN_INFO "write_fn called ! cmd len: %d\n",sz);
 	printk(KERN_INFO "cmd: %s\n",ch);
 	if ( !strncmp("ON",ch ,2 )){
 		iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn on led 
@@ -175,23 +105,59 @@ static ssize_t write_fn (struct file *fl, const char *ch, size_t e, loff_t *oth)
 }
 
 static int open_fn (struct inode *lk, struct file *kl){
-	printk(KERN_INFO "open_fn called !");
+	mapIo();
+	setup();
+	printk(KERN_INFO "open_fn called !\n");
 	return 0;
 }
 
 static int release_fn(struct inode *lk, struct file *kl){
-	printk(KERN_INFO "close_fn called !");
+	unMap();
+	printk(KERN_INFO "close_fn called !\n");
 	return 0;
 }
 
 static void setup (void){
-		 u32 read  = ioread32(gpio_b_gdir_vm);		//  
-		 printk(KERN_INFO "reg val: %x",read);
+	u32 read  = ioread32(gpio_b_gdir_vm);		//  
+	printk(KERN_INFO "reg val: %x\n",read);
 
-		 iowrite32( 0b1 << led_blue_pin , gpio_b_gdir_vm);		// sets blue led pin as output
-		 /* iowrite32( 0b1 << led_yellow_pin, gpio_y_gdir_vm);		// sets yello led pin as output */
-		 iowrite32( 0b1 << led_red_pin , gpio_r_gdir_vm);		// sets red led pin as output
-												//
-		 read  = ioread32(gpio_b_gdir_vm);		//  
-		 printk(KERN_INFO "reg val: %x",read);
+	iowrite32( 0b1 << led_blue_pin , gpio_b_gdir_vm);		// sets blue led pin as output
+	/* iowrite32( 0b1 << led_yellow_pin, gpio_y_gdir_vm);		// sets yello led pin as output */
+	iowrite32( 0b1 << led_red_pin , gpio_r_gdir_vm);		// sets red led pin as output
+											//
+	read  = ioread32(gpio_b_gdir_vm);		//  
+	printk(KERN_INFO "reg val: %x\n",read);
+}
+
+static void mapIo(void){
+	gpio_b_gdir_vm	= ioremap(gpio_b_gdir, sizeof(u32));
+	gpio_y_gdir_vm	= ioremap(gpio_y_gdir, sizeof(u32));
+	gpio_r_gdir_vm	= ioremap(gpio_r_gdir, sizeof(u32));
+
+	gpio_b_dr_vm	= ioremap(gpio_b_dr, sizeof(u32));
+	gpio_y_dr_vm	= ioremap(gpio_y_dr, sizeof(u32));
+	gpio_r_dr_vm	= ioremap(gpio_r_dr, sizeof(u32));
+}
+
+static void unMap(void ){
+	iounmap(gpio_b_dr_vm);
+	iounmap(gpio_y_dr_vm);
+	iounmap(gpio_r_dr_vm);
+
+	iounmap(gpio_b_gdir_vm);
+	iounmap(gpio_y_gdir_vm);
+	iounmap(gpio_r_gdir_vm);
+}
+static void ledAll( int arg ){
+	if (!arg){
+		iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
+		iowrite32( 0b0 << led_yellow_pin, gpio_y_dr_vm);		// turn off led 
+		iowrite32( 0b0 << led_red_pin, gpio_r_dr_vm);		// turn off led 
+	}
+	else{
+		iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
+		iowrite32( 0b1 << led_yellow_pin, gpio_y_dr_vm);		// turn off led 
+		iowrite32( 0b1 << led_red_pin, gpio_r_dr_vm);		// turn off led 
+
+	}
 }
