@@ -11,9 +11,19 @@
 
 // define .begin
 #define	gpio_b_base_addr	(0x20A4000)
+#define	gpio_y_base_addr	(0x20B4000)
+#define	gpio_r_base_addr	(0x209C000)
 #define		gpio_b_dr			gpio_b_base_addr
+#define		gpio_y_dr			gpio_y_base_addr
+#define		gpio_r_dr			gpio_r_base_addr
 #define		gpio_b_gdir			(gpio_b_base_addr+0x04)
+#define		gpio_y_gdir			(gpio_y_base_addr+0x04)
+#define		gpio_r_gdir			(gpio_r_base_addr+0x04)
+
 #define 	led_blue_pin		(26)
+#define 	led_yellow_pin		(8)
+#define 	led_red_pin			(24)
+
 #define 	WR_VALUE	_IOW('d','a', int32_t *)
 #define 	RD_VALUE	_IOW('d','b', int32_t *)
 #define 	ON		_IOW('d','b', int32_t *)
@@ -23,6 +33,11 @@
 // global var
 static void __iomem*		gpio_b_gdir_vm;
 static void __iomem*		gpio_b_dr_vm  ;
+static void __iomem*		gpio_y_gdir_vm;
+static void __iomem*		gpio_y_dr_vm  ;
+static void __iomem*		gpio_r_gdir_vm;
+static void __iomem*		gpio_r_dr_vm  ;
+
 static struct device * my_device ;
 static struct class * my_class ;
 static int major	;
@@ -98,18 +113,34 @@ static int my_driver_init(void){
 	printk(KERN_INFO "device node created ... !");
 	
 	gpio_b_gdir_vm	= ioremap(gpio_b_gdir, sizeof(u32));
+	gpio_y_gdir_vm	= ioremap(gpio_y_gdir, sizeof(u32));
+	gpio_r_gdir_vm	= ioremap(gpio_r_gdir, sizeof(u32));
+
 	gpio_b_dr_vm	= ioremap(gpio_b_dr, sizeof(u32));
+	gpio_y_dr_vm	= ioremap(gpio_y_dr, sizeof(u32));
+	gpio_r_dr_vm	= ioremap(gpio_r_dr, sizeof(u32));
+
 	setup ();
 	iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
+	iowrite32( 0b0 << led_yellow_pin, gpio_y_dr_vm);		// turn off led 
+	iowrite32( 0b0 << led_red_pin, gpio_r_dr_vm);		// turn off led 
 	return 0;
 
 }
 
 static void  my_driver_exit(void){
 	iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn on led 
-	/* gpio_b_gdir_vm	= ioremap(gpio_b_gdir, sizeof(u32)); */
+	iowrite32( 0b1 << led_yellow_pin, gpio_y_dr_vm);		// turn on led 
+	iowrite32( 0b1 << led_red_pin, gpio_r_dr_vm);		// turn on led 
+
 	iounmap(gpio_b_dr_vm);
+	iounmap(gpio_y_dr_vm);
+	iounmap(gpio_r_dr_vm);
+
 	iounmap(gpio_b_gdir_vm);
+	iounmap(gpio_y_gdir_vm);
+	iounmap(gpio_r_gdir_vm);
+
 	printk(KERN_INFO "Module exit fn called\n");
 	device_destroy(my_class, MKDEV(major,0));
 	unregister_chrdev(major, DEVICE_NAME);
@@ -155,9 +186,12 @@ static int release_fn(struct inode *lk, struct file *kl){
 
 static void setup (void){
 		 u32 read  = ioread32(gpio_b_gdir_vm);		//  
-		 /* printk(KERN_INFO "gdir gp3: %x",mask_pin); */
 		 printk(KERN_INFO "reg val: %x",read);
-		 iowrite32( 0b1 << led_blue_pin , gpio_b_gdir_vm);		// sets led pin as output
+
+		 iowrite32( 0b1 << led_blue_pin , gpio_b_gdir_vm);		// sets blue led pin as output
+		 /* iowrite32( 0b1 << led_yellow_pin, gpio_y_gdir_vm);		// sets yello led pin as output */
+		 iowrite32( 0b1 << led_red_pin , gpio_r_gdir_vm);		// sets red led pin as output
+												//
 		 read  = ioread32(gpio_b_gdir_vm);		//  
 		 printk(KERN_INFO "reg val: %x",read);
 }
