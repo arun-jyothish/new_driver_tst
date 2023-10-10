@@ -1,4 +1,6 @@
 ./Makefile
 ./my_driver.mod.c
 ./driver.c
+./app/driver_ioctl_.app.c
+./app/driver.app.c
 ./my_driver.c

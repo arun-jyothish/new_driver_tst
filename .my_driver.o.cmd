@@ -456,6 +456,13 @@ deps_/home/arun/kernel/wan_lnk/driver/my_driver.o := \
     $(wildcard include/config/arm/dma/use/iommu.h) \
     $(wildcard include/config/arch/omap.h) \
   include/linux/pm_wakeup.h \
+  include/linux/uaccess.h \
+  arch/arm/include/asm/uaccess.h \
+    $(wildcard include/config/have/efficient/unaligned/access.h) \
+  include/uapi/linux/ioctl.h \
+  arch/arm/include/generated/asm/ioctl.h \
+  include/asm-generic/ioctl.h \
+  include/uapi/asm-generic/ioctl.h \
   include/linux/fs.h \
     $(wildcard include/config/fs/posix/acl.h) \
     $(wildcard include/config/security.h) \
@@ -493,10 +500,6 @@ deps_/home/arun/kernel/wan_lnk/driver/my_driver.o := \
     $(wildcard include/config/blk/dev/integrity.h) \
   include/uapi/linux/fs.h \
   include/uapi/linux/limits.h \
-  include/uapi/linux/ioctl.h \
-  arch/arm/include/generated/asm/ioctl.h \
-  include/asm-generic/ioctl.h \
-  include/uapi/asm-generic/ioctl.h \
   include/linux/quota.h \
     $(wildcard include/config/quota/netlink/interface.h) \
   include/linux/percpu_counter.h \
