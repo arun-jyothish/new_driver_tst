@@ -534,6 +534,7 @@ deps_/home/arun/kernel/wan_lnk/driver/my_driver.o := \
     $(wildcard include/config/generic/iomap.h) \
   include/linux/vmalloc.h \
   /home/arun/kernel/wan_lnk/driver/my_driver.h \
+  /home/arun/kernel/wan_lnk/driver/my_driver_generic.h \
 
 /home/arun/kernel/wan_lnk/driver/my_driver.o: $(deps_/home/arun/kernel/wan_lnk/driver/my_driver.o)
 

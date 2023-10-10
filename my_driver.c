@@ -56,7 +56,6 @@ static int my_driver_init(void){
 	}
 	printk(KERN_INFO "device node created ... !\n");
 
-
 	mapIo();
 	setup ();
 	ledAll(LIGHT_OFF);

@@ -7,18 +7,12 @@
 #include <linux/fcntl.h>
 #include <unistd.h>
 
-#define 	WR_VALUE	_IOW('d','a', int32_t *)
-#define 	ON		_IOW('d','b', int32_t *)
-#define 	OFF		_IOW('d','c', int32_t *)
-#define 	RD_VALUE	_IOR('d','d', int32_t *)
+#include  "../my_driver_generic.h"
+
 
 void main(){
 	printf("Driver application start\n");
 	int fd = open ("/dev/my_driver",2);
-	if ( fd != 0 ){
-		printf("errorr ... opening\n");
-		return;
-	}
 	printf("\nEnter cmd (1: LED ON, 2: LED_OFF, 3: BLINK)\n");
 	while(1){
 		ioctl(fd,ON);
