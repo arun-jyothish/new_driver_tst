@@ -16,11 +16,12 @@ void main(){
 	printf("\nEnter cmd (1: LED ON, 2: LED_OFF, 3: BLINK)\n");
 	while(1){
 		ioctl(fd,ON);
-		printf("on.. %ld\n",ON);
+		printf("\r	on.. %ld",ON);
 		sleep(1);
 		ioctl(fd,OFF);
-		printf("off.. %ld\n",OFF);
+		printf("\r	off.. %ld",OFF);
 		sleep(1);
+		/* printf("\r %ld\n",OFF); */
 	}
 }
 
