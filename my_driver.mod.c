@@ -25,13 +25,15 @@ __attribute__((section("__versions"))) = {
 	{ 0xfacafeb, __VMLINUX_SYMBOL_STR(device_create) },
 	{ 0x3c8c7d13, __VMLINUX_SYMBOL_STR(__class_create) },
 	{ 0x34fbc3de, __VMLINUX_SYMBOL_STR(__register_chrdev) },
-	{ 0x67c2fa54, __VMLINUX_SYMBOL_STR(__copy_to_user) },
-	{ 0x83f62a58, __VMLINUX_SYMBOL_STR(gpiod_get_raw_value) },
-	{ 0x389329b3, __VMLINUX_SYMBOL_STR(gpiod_set_raw_value) },
+	{ 0xc0065d, __VMLINUX_SYMBOL_STR(gpiod_set_debounce) },
 	{ 0xb7cfa4a8, __VMLINUX_SYMBOL_STR(gpiod_direction_input) },
 	{ 0xc61ff1f2, __VMLINUX_SYMBOL_STR(gpiod_direction_output_raw) },
-	{ 0x3089e8ae, __VMLINUX_SYMBOL_STR(gpio_to_desc) },
 	{ 0x47229b5c, __VMLINUX_SYMBOL_STR(gpio_request) },
+	{ 0x67c2fa54, __VMLINUX_SYMBOL_STR(__copy_to_user) },
+	{ 0xf9a482f9, __VMLINUX_SYMBOL_STR(msleep) },
+	{ 0x389329b3, __VMLINUX_SYMBOL_STR(gpiod_set_raw_value) },
+	{ 0x83f62a58, __VMLINUX_SYMBOL_STR(gpiod_get_raw_value) },
+	{ 0x3089e8ae, __VMLINUX_SYMBOL_STR(gpio_to_desc) },
 	{ 0xfe990052, __VMLINUX_SYMBOL_STR(gpio_free) },
 	{ 0xefd6cf06, __VMLINUX_SYMBOL_STR(__aeabi_unwind_cpp_pr0) },
 	{ 0x27e1a049, __VMLINUX_SYMBOL_STR(printk) },
@@ -43,4 +45,4 @@ __attribute__((section(".modinfo"))) =
 "depends=";
 
 
-MODULE_INFO(srcversion, "B8235E5BD026F389E38DBB0");
+MODULE_INFO(srcversion, "1ADD62FBE4F09A58C924654");

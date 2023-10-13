@@ -135,6 +135,29 @@ deps_/home/arun/kernel/wan_lnk/driver/my_driver.o := \
   include/asm-generic/bug.h \
     $(wildcard include/config/generic/bug.h) \
     $(wildcard include/config/generic/bug/relative/pointers.h) \
+  include/linux/delay.h \
+  arch/arm/include/asm/delay.h \
+  arch/arm/include/asm/memory.h \
+    $(wildcard include/config/need/mach/memory/h.h) \
+    $(wildcard include/config/page/offset.h) \
+    $(wildcard include/config/highmem.h) \
+    $(wildcard include/config/dram/base.h) \
+    $(wildcard include/config/dram/size.h) \
+    $(wildcard include/config/have/tcm.h) \
+    $(wildcard include/config/arm/patch/phys/virt.h) \
+    $(wildcard include/config/phys/offset.h) \
+    $(wildcard include/config/virt/to/bus.h) \
+  include/uapi/linux/const.h \
+  include/linux/sizes.h \
+  include/asm-generic/memory_model.h \
+    $(wildcard include/config/flatmem.h) \
+    $(wildcard include/config/discontigmem.h) \
+    $(wildcard include/config/sparsemem/vmemmap.h) \
+    $(wildcard include/config/sparsemem.h) \
+  arch/arm/include/generated/asm/param.h \
+  include/asm-generic/param.h \
+    $(wildcard include/config/hz.h) \
+  include/uapi/asm-generic/param.h \
   include/linux/module.h \
     $(wildcard include/config/sysfs.h) \
     $(wildcard include/config/module/sig.h) \
@@ -149,7 +172,6 @@ deps_/home/arun/kernel/wan_lnk/driver/my_driver.o := \
     $(wildcard include/config/debug/list.h) \
   include/linux/poison.h \
     $(wildcard include/config/illegal/pointer/value.h) \
-  include/uapi/linux/const.h \
   include/linux/stat.h \
   arch/arm/include/uapi/asm/stat.h \
   include/uapi/linux/stat.h \
@@ -190,22 +212,6 @@ deps_/home/arun/kernel/wan_lnk/driver/my_driver.o := \
     $(wildcard include/config/have/arch/pfn/valid.h) \
   arch/arm/include/asm/glue.h \
   arch/arm/include/asm/pgtable-2level-types.h \
-  arch/arm/include/asm/memory.h \
-    $(wildcard include/config/need/mach/memory/h.h) \
-    $(wildcard include/config/page/offset.h) \
-    $(wildcard include/config/highmem.h) \
-    $(wildcard include/config/dram/base.h) \
-    $(wildcard include/config/dram/size.h) \
-    $(wildcard include/config/have/tcm.h) \
-    $(wildcard include/config/arm/patch/phys/virt.h) \
-    $(wildcard include/config/phys/offset.h) \
-    $(wildcard include/config/virt/to/bus.h) \
-  include/linux/sizes.h \
-  include/asm-generic/memory_model.h \
-    $(wildcard include/config/flatmem.h) \
-    $(wildcard include/config/discontigmem.h) \
-    $(wildcard include/config/sparsemem/vmemmap.h) \
-    $(wildcard include/config/sparsemem.h) \
   include/asm-generic/getorder.h \
   arch/arm/include/asm/domain.h \
     $(wildcard include/config/io/36.h) \
@@ -370,10 +376,6 @@ deps_/home/arun/kernel/wan_lnk/driver/my_driver.o := \
   include/linux/timex.h \
   include/uapi/linux/timex.h \
   include/uapi/linux/param.h \
-  arch/arm/include/generated/asm/param.h \
-  include/asm-generic/param.h \
-    $(wildcard include/config/hz.h) \
-  include/uapi/asm-generic/param.h \
   arch/arm/include/asm/timex.h \
   include/linux/timekeeping.h \
   include/linux/topology.h \
