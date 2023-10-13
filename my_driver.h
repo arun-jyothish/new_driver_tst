@@ -29,7 +29,6 @@ static void __iomem*		gpio_r_dr_vm  ;
 static struct device * my_device ;
 static struct class * my_class ;
 static int major	;
-static char str_cmd [20] ;
 
 // fn prototype
 static void setup (void);
@@ -41,6 +40,9 @@ static long ioctl_fn(struct file *fl,unsigned int cmd, unsigned long arg);
 static void unMap(void );
 static void mapIo(void );
 static void ledAll( int arg );
+static void gpio_setup(void);
+static int my_driver_init(void);
+static void  my_driver_exit(void);
 
 
 static struct file_operations fops = {

@@ -1,4 +1,5 @@
 #include <linux/kernel.h>
+#include <linux/errno.h>
 #include <linux/module.h>
 #include <linux/string.h>
 #include <linux/device.h>
@@ -7,23 +8,33 @@
 #include <linux/ioctl.h>
 #include <linux/fs.h>
 #include <linux/io.h>
+#include <linux/gpio.h>
 #include "my_driver.h"
 
+#define LED_GPIO		( (7-1)*32 + 8 )			// blue led gpio number
+#define BTN_GPIO		( (3-1)*32 + 27 )			// btn gpio number
+									//
+char str_cmd[10];
 
-
-// fn definition 
+module_init(my_driver_init);
+module_exit(my_driver_exit);
 
 static long ioctl_fn(struct file *fl,unsigned int cmd, unsigned long arg){
 
 	printk(KERN_INFO "\n cmd rec: %d\n", cmd);
 	switch(cmd){
 		case ON:
-			iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn on led 
-			iowrite32( 0b0 << led_red_pin, gpio_r_dr_vm);		// turn on led 
+			printk(KERN_INFO "DRIVER ENABLED SELECTED ..\n", cmd);
 			break;	
 		case OFF:
-			iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
-			iowrite32( 0b1 << led_red_pin, gpio_r_dr_vm);		// turn off led 
+			printk(KERN_INFO "DRIVER DISABLED SELECTED ..\n", cmd);
+			break;	
+		case POLL:
+			printk(KERN_INFO "POLLING MODE SELECTED ..\n", cmd);
+			int val = gpio_get_value ( BTN_GPIO );
+			break;	
+		case INT:
+			printk(KERN_INFO "INTERRUPT MODE SELECTED ..\n", cmd);
 			break;	
 	}
 	return 0;
@@ -55,20 +66,13 @@ static int my_driver_init(void){
 		return PTR_ERR(my_device);
 	}
 	printk(KERN_INFO "device node created ... !\n");
+	gpio_setup();
 
-	mapIo();
-	setup ();
-	ledAll(LIGHT_OFF);
-	unMap();
+	gpio_free( LED_GPIO );
+	gpio_free( BTN_GPIO );
 	return INIT_SUCC;
-
 }
 static void  my_driver_exit(void){
-	mapIo();
-	setup ();
-	ledAll(LIGHT_ON);								// turn on all led
-	unMap();
-
 	printk(KERN_INFO "Module exit fn called\n");
 	device_destroy(my_class, MKDEV(major,0));
 	unregister_chrdev(major, DEVICE_NAME);
@@ -77,85 +81,46 @@ static void  my_driver_exit(void){
 	printk(KERN_INFO "Module exit fn\n");
 }
 
-module_init(my_driver_init);
-module_exit(my_driver_exit);
 
 static ssize_t read_fn (struct file *fl, char * ch, size_t e, loff_t *oth){
-	printk(KERN_INFO "read_fn called !\n");
-	copy_to_user(ch , str_cmd , sizeof(str_cmd));
-	iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
-	return 0;
-}
-static ssize_t write_fn (struct file *fl, const char *ch, size_t e, loff_t *oth){
-	int sz = sizeof(ch);
-	printk(KERN_INFO "write_fn called ! cmd len: %d\n",sz);
-	printk(KERN_INFO "cmd: %s\n",ch);
-	if ( !strncmp("ON",ch ,2 )){
-		iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn on led 
-		strcpy( str_cmd,"LED ON");
-	}
-	if ( !strncmp("OFF",ch,3 ) ){
-		static char str_cmd[] = "LED OFF";
-		iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
-		strcpy( str_cmd,"LED ON");
-	}
-	return sz;
+	if ( gpio_get_value ( BTN_GPIO ))
+		strcpy(str_cmd,"ON\n");
+	else
+		strcpy(str_cmd,"OFF\n");
+	printk(KERN_INFO "btn: %d\n", gpio_get_value ( BTN_GPIO ));
+	copy_to_user(ch, str_cmd , sizeof(ch));
+	return 4;
 }
 
+static ssize_t write_fn (struct file *fl, const char *ch, size_t e, loff_t *oth){
+	printk(KERN_INFO "writing .. \n");
+	return 3;
+}
 static int open_fn (struct inode *lk, struct file *kl){
-	mapIo();
-	setup();
+	gpio_setup();
 	printk(KERN_INFO "open_fn called !\n");
 	return 0;
 }
-
 static int release_fn(struct inode *lk, struct file *kl){
-	unMap();
+	gpio_free( LED_GPIO );
+	gpio_free( BTN_GPIO );
 	printk(KERN_INFO "close_fn called !\n");
 	return 0;
 }
+static void gpio_setup(void){
+		printk(KERN_INFO "BTN: %d\t LED: %d\n",BTN_GPIO,LED_GPIO);
+	if ( ! gpio_is_valid(LED_GPIO) ) {
+		printk(KERN_INFO "GPIO is not valid .. \n"); }
 
-static void setup (void){
-	u32 read  = ioread32(gpio_b_gdir_vm);		//  
-	printk(KERN_INFO "reg val: %x\n",read);
+	if ( ENOSYS == gpio_request(LED_GPIO, "LED") ) {
+		printk(KERN_INFO "Invalid syscall gpio_reques LED\n"); }
+	if ( ENOSYS == gpio_request(BTN_GPIO, "BTN") ) {
+		printk(KERN_INFO "Invalid syscall gpio_reques BTN\n"); }
+	if ( gpio_direction_output ( LED_GPIO , 0) ){
+		printk(KERN_INFO "can't set gpio as output for LED\n"); }
+	if ( gpio_direction_input( BTN_GPIO   )){
+		printk(KERN_INFO "can't set gpio as output for BTN\n"); }
 
-	iowrite32( 0b1 << led_blue_pin , gpio_b_gdir_vm);		// sets blue led pin as output
-	/* iowrite32( 0b1 << led_yellow_pin, gpio_y_gdir_vm);		// sets yello led pin as output */
-	iowrite32( 0b1 << led_red_pin , gpio_r_gdir_vm);		// sets red led pin as output
-											//
-	read  = ioread32(gpio_b_gdir_vm);		//  
-	printk(KERN_INFO "reg val: %x\n",read);
+	gpio_set_value (LED_GPIO , 0); 			// Turn off LED
 }
 
-static void mapIo(void){
-	gpio_b_gdir_vm	= ioremap(gpio_b_gdir, sizeof(u32));
-	gpio_y_gdir_vm	= ioremap(gpio_y_gdir, sizeof(u32));
-	gpio_r_gdir_vm	= ioremap(gpio_r_gdir, sizeof(u32));
-
-	gpio_b_dr_vm	= ioremap(gpio_b_dr, sizeof(u32));
-	gpio_y_dr_vm	= ioremap(gpio_y_dr, sizeof(u32));
-	gpio_r_dr_vm	= ioremap(gpio_r_dr, sizeof(u32));
-}
-
-static void unMap(void ){
-	iounmap(gpio_b_dr_vm);
-	iounmap(gpio_y_dr_vm);
-	iounmap(gpio_r_dr_vm);
-
-	iounmap(gpio_b_gdir_vm);
-	iounmap(gpio_y_gdir_vm);
-	iounmap(gpio_r_gdir_vm);
-}
-static void ledAll( int arg ){
-	if (!arg){
-		iowrite32( 0b0 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
-		iowrite32( 0b0 << led_yellow_pin, gpio_y_dr_vm);		// turn off led 
-		iowrite32( 0b0 << led_red_pin, gpio_r_dr_vm);		// turn off led 
-	}
-	else{
-		iowrite32( 0b1 << led_blue_pin, gpio_b_dr_vm);		// turn off led 
-		iowrite32( 0b1 << led_yellow_pin, gpio_y_dr_vm);		// turn off led 
-		iowrite32( 0b1 << led_red_pin, gpio_r_dr_vm);		// turn off led 
-
-	}
-}

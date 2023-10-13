@@ -1,136 +1,4 @@
-cscope 15 /nfs_rfs/home/ubuntu/kernel/driver               0000085941
-	@Makefile
-
-1 
-	gKBUILD_EXTRA_SYMBOLS
-=
-n
-
-
-2 
-CONFIG_MODULE_SIG
-=
-n
-
-
-3 
-CONFIG_MODVERSIONS
-=
-n
-
-
-5 
-obj
--
-m
- +
-my_drivî
-.
-o
-
-
-6 #roŸ_dú = /
-home
-/
-¨un
-/
-Tech√xi⁄
-/
-ãch
-/
-löux
-
-
-7 
-roŸ_dú
- = /
-home
-/
-¨un
-/
-√w
-/
-löux
-
-
-10 #makê-
-C
- 
-$
-{
-roŸ_dú
-} 
-M
-=${
-PWD
-} 
-moduÀs
-
-
-11 
-föÆ
-:
-
-12 
-make
- 
-ARCH
-=
-¨m
- 
-CROSS_COMPILE
-=/
-home
-/
-¨un
-/
-√w
-/
-gcc
--
-lö¨o
--7.5.0-2019.12-
-x86_64_¨m
--
-löux
--
-gnuóbihf
-/
-bö
-/¨m-löux-gnuóbihf- -
-C
- 
-$
-{
-roŸ_dú
-} 
-M
-=${
-PWD
-} 
-moduÀs
-
-
-13 
-˛ón
-:
-
-14 
-make
- -
-C
- 
-$
-{
-roŸ_dú
-} 
-M
-=${
-PWD
-} 
-˛ón
-
-
+cscope 15 /nfs_rfs/home/ubuntu/kernel/driver               0000101057
 	@app/driver.app.c
 
 1 
@@ -221,53 +89,81 @@ buf
 	~<löux/ty≥s.h
 >
 
-6 
+4 
+	~<löux/io˘l.h
+>
+
+5 
+	~<°döt.h
+>
+
+7 
+	~<löux/f˙é.h
+>
+
+8 
 	~<uni°d.h
 >
 
-9 
+10 
+	~"../my_drivî_gíîic.h
+"
+
+13 
 	$maö
 (){
 
-10 
+14 
 	`¥ötf
-("Driverápplication start");
+("Driverápplication start\n");
 
-11 
+15 
 fd
  = 
 	`›í
  ("/dev/my_driver",2);
 
-12 
-	`¥ötf
-("Enter cmd (1: LED ON, 2: LED_OFF, 3: BLINK)\n");
-
-13 
-cmd
-;
-
-14 
-cmd_°r
- [15];
-
-15 
-	`sˇnf
-(" %s",&
-cmd
-);
-
 16 
-	`wrôe
+	`¥ötf
+("\nEnter cmd (1: LED ON, 2: LED_OFF, 3: BLINK)\n");
+
+18 
+	`io˘l
 (
 fd
-, 
-cmd_°r
- , 
-	`°æí
-(cmd_str) );
+,
+ON
+);
 
-36 
+19 
+	`¥ötf
+("\r on.. %ld",
+ON
+);
+
+20 
+	`¶ìp
+(1);
+
+21 
+	`io˘l
+(
+fd
+,
+OFF
+);
+
+22 
+	`¥ötf
+("\r off.. %ld",
+OFF
+);
+
+23 
+	`¶ìp
+(1);
+
+26 
 	}
 }
 
@@ -704,216 +600,168 @@ gpio_b_dr_vm
 >
 
 2 
-	~<löux/moduÀ.h
+	~<löux/î∫o.h
 >
 
 3 
-	~<löux/°rög.h
+	~<löux/moduÀ.h
 >
 
 4 
-	~<löux/devi˚.h
+	~<löux/°rög.h
 >
 
 5 
-	~<löux/öô.h
+	~<löux/devi˚.h
 >
 
 6 
-	~<löux/uac˚ss.h
+	~<löux/öô.h
 >
 
 7 
-	~<löux/io˘l.h
+	~<löux/uac˚ss.h
 >
 
 8 
-	~<löux/fs.h
+	~<löux/io˘l.h
 >
 
 9 
+	~<löux/fs.h
+>
+
+10 
 	~<löux/io.h
 >
 
-13 
-	#gpio_b_ba£_addr
- (0x20A4000)
+11 
+	~<löux/gpio.h
+>
 
-	)
+12 
+	~"my_drivî.h
+"
 
 14 
-	#gpio_b_dr
- 
-gpio_b_ba£_addr
-
-
-	)
+	#LED_GPIO
+ ( (7-1)*32 + 26 )
 
 15 
-	#gpio_b_gdú
- (
-gpio_b_ba£_addr
-+0x04)
+	#BTN_GPIO
+ ( (3-1)*32 + 27 )
+
+16 
 
 	)
 
-16 
-	#Àd_blue_pö
- (26)
+17 
+moduÀ_öô
+(
+my_drivî_öô
+);
 
-	)
+18 
+moduÀ_exô
+(
+my_drivî_exô
+);
 
-21 
-__iomem
-* 
-	ggpio_b_gdú_vm
-;
-
-22 
-__iomem
-* 
-	ggpio_b_dr_vm
- ;
-
-23 
-devi˚
- * 
-	gmy_devi˚
- ;
-
-24 
-˛ass
- * 
-	gmy_˛ass
- ;
-
-25 
-	gmaj‹
- ;
-
-26 
-	g°r_cmd
- [20] ;
-
-30 
-£tup
- ();
-
-31 
-ssize_t
- 
-ªad_‚
- (
+20 
+	$io˘l_‚
+(
 fûe
- *, *, 
-size_t
-, 
-loff_t
- *);
+ *
+Ê
+,
+cmd
+, 
+¨g
+){
 
-32 
-ssize_t
- 
-wrôe_‚
- (
-fûe
- *, c⁄° *, 
-size_t
-, 
-loff_t
- *);
-
-34 
-›í_‚
- (
-öode
- *, 
-fûe
- *);
-
-35 
-ªÀa£_‚
- (
-öode
- *, 
-fûe
- *);
-
-39 
-fûe_›î©i⁄s
- 
-	gf›s
- = {
-
-40 
-ow√r
-: 
-THIS_MODULE
-,
-
-41 
-ªad
- : 
-ªad_‚
-,
-
-42 
-wrôe
- : 
-wrôe_‚
-,
-
-43 
-›í
- : 
-›í_‚
-,
-
-44 
-ªÀa£
- : 
-ªÀa£_‚
-
-
-48 
-	#DEVICE_NAME
- "my_drivî"
-
-	)
-
-49 
-	#DEVICE_CLASS
- "my_drivî_˛ass"
-
-	)
-
-52 
-MODULE_LICENSE
-("GPL");
-
-53 
-MODULE_AUTHOR
-("ARUN JYOTHISH K");
-
-54 
-MODULE_DESCRIPTION
-(" device description my device driver .. ");
-
-55 
-MODULE_VERSION
-("1.0");
-
-59 
-	$my_drivî_öô
-(){
-
-61 
+22 
 	`¥ötk
 (
 KERN_INFO
- "Module intit fn");
+ "\¿cmdÑec: %d\n", 
+cmd
+);
 
-62 
+23 
+cmd
+){
+
+24 
+ON
+:
+
+25 
+	`¥ötk
+(
+KERN_INFO
+ "DRIVER ENABLED SELECTED ..\n", 
+cmd
+);
+
+27 
+OFF
+:
+
+28 
+	`¥ötk
+(
+KERN_INFO
+ "DRIVER DISABLED SELECTED ..\n", 
+cmd
+);
+
+30 
+POLL
+:
+
+31 
+	`¥ötk
+(
+KERN_INFO
+ "POLLING MODE SELECTED ..\n", 
+cmd
+);
+
+32 
+vÆ
+ = 
+	`gpio_gë_vÆue
+ ( 
+BTN_GPIO
+ );
+
+34 
+INT
+:
+
+35 
+	`¥ötk
+(
+KERN_INFO
+ "INTERRUPT MODE SELECTED ..\n", 
+cmd
+);
+
+39 
+	}
+}
+
+41 
+	$my_drivî_öô
+(){
+
+42 
+	`¥ötk
+(
+KERN_INFO
+ "Module intit fn\n");
+
+43 
 maj‹
  = 
 	`ªgi°î_chrdev
@@ -923,29 +771,29 @@ DEVICE_NAME
 f›s
 );
 
-63 i‡(
+44 i‡(
 maj‹
  < 0 ){
 
-64 
+45 
 	`¥ötk
 (
 KERN_INFO
  "DriverÑegister failed\n");
 
-65  
+46  
 maj‹
 ;
 
-67 
+48 
 	`¥ötk
 (
 KERN_INFO
- "My_drivî Maj‹ NO: %d",
+ "My_drivî Maj‹ NO: %d\n",
 maj‹
 );
 
-69 
+50 
 my_˛ass
  = 
 	`˛ass_¸óã
@@ -955,13 +803,13 @@ THIS_MODULE
 DEVICE_CLASS
  );
 
-70 i‡–
+51 i‡–
 	`IS_ERR
 –
 my_˛ass
  ) ){
 
-71 
+52 
 	`uƒegi°î_chrdev
  ( 
 maj‹
@@ -969,25 +817,25 @@ maj‹
 DEVICE_NAME
  );
 
-72 
+53 
 	`¥ötk
 (
 KERN_ALERT
- "My_driver CLASS CREATE FAILED");
+ "My_driver CLASS CREATE FAILED\n");
 
-73  
+54  
 	`PTR_ERR
 (
 my_˛ass
 );
 
-75 
+56 
 	`¥ötk
 (
 KERN_INFO
- "My_driver class created ");
+ "My_driver class created \n");
 
-78 
+59 
 my_devi˚
  = 
 	`devi˚_¸óã
@@ -1003,19 +851,19 @@ maj‹
 DEVICE_NAME
  );
 
-79 i‡–
+60 i‡–
 	`IS_ERR
 –
 my_devi˚
  ) ){
 
-80 
+61 
 	`˛ass_de°roy
 –
 my_˛ass
  );
 
-81 
+62 
 	`uƒegi°î_chrdev
  ( 
 maj‹
@@ -1023,83 +871,59 @@ maj‹
 DEVICE_NAME
  );
 
-82 
+63 
 	`¥ötk
 (
 KERN_ALERT
- "My_driver DEVICE CREATE FAILED");
+ "My_driver DEVICE CREATE FAILED\n");
 
-83  
+64  
 	`PTR_ERR
 (
 my_devi˚
 );
 
-85 
+66 
 	`¥ötk
 (
 KERN_INFO
- "deviceÇode created ... !");
+ "deviceÇode created ... !\n");
 
-95 
-gpio_b_gdú_vm
- = 
-	`i‹em≠
-(
-gpio_b_gdú
-, (
-u32
-));
+67 
+	`gpio_£tup
+();
 
-96 
-gpio_b_dr_vm
- = 
-	`i‹em≠
-(
-gpio_b_dr
-, (
-u32
-));
+69 
+	`gpio_‰ì
+–
+LED_GPIO
+ );
 
-97 
-	`£tup
- ();
+70 
+	`gpio_‰ì
+–
+BTN_GPIO
+ );
 
-98 
-	`iowrôe32
-–0b0 << 
-Àd_blue_pö
-, 
-gpio_b_dr_vm
-);
+71  
+INIT_SUCC
+;
 
-105 
+72 
 	}
 }
 
-113 
+73 
 	$my_drivî_exô
 (){
 
-114 
-	`iounm≠
-(
-gpio_b_dr_vm
-);
-
-115 
-	`iounm≠
-(
-gpio_b_gdú_vm
-);
-
-116 
+74 
 	`¥ötk
 (
 KERN_INFO
  "ModuleÉxit fn called\n");
 
-117 
+75 
 	`devi˚_de°roy
 (
 my_˛ass
@@ -1109,7 +933,7 @@ my_˛ass
 maj‹
 ,0));
 
-118 
+76 
 	`uƒegi°î_chrdev
 (
 maj‹
@@ -1117,41 +941,29 @@ maj‹
 DEVICE_NAME
 );
 
-119 
+77 
 	`˛ass_de°roy
 (
 my_˛ass
 );
 
-120 
+78 
 	`˛ass_uƒegi°î
 (
 my_˛ass
 );
 
-122 
+79 
 	`¥ötk
 (
 KERN_INFO
- "ModuleÉxit fn");
+ "ModuleÉxit fn\n");
 
-123 
+80 
 	}
 }
 
-125 
-moduÀ_öô
-(
-my_drivî_öô
-);
-
-126 
-moduÀ_exô
-(
-my_drivî_exô
-);
-
-128 
+83 
 ssize_t
  
 	$ªad_‚
@@ -1171,13 +983,17 @@ loff_t
 Ÿh
 ){
 
-129 
-	`¥ötk
-(
-KERN_INFO
- "read_fn called !");
+84 i‡–
+	`gpio_gë_vÆue
+ ( ))
 
-130 
+85 
+	`°r˝y
+(
+ch
+,"ON")
+
+86 
 	`c›y_to_u£r
 (
 ch
@@ -1185,19 +1001,11 @@ ch
 °r_cmd
  , (str_cmd));
 
-131 
-	`iowrôe32
-–0b0 << 
-Àd_blue_pö
-, 
-gpio_b_dr_vm
-);
-
-133 
+88 
 	}
 }
 
-134 
+90 
 ssize_t
  
 	$wrôe_‚
@@ -1217,81 +1025,17 @@ loff_t
 Ÿh
 ){
 
-135 
-sz
- = (
-ch
-);
-
-136 
+91 
 	`¥ötk
 (
 KERN_INFO
- "wrôe_‚ cÆÀd ! cmdÜí: %d",
-sz
-);
+ "writing .. \n");
 
-137 
-	`¥ötk
-(
-KERN_INFO
- "cmd: %s\n",
-ch
-);
-
-138 i‡–!
-	`°∫cmp
-("ON",
-ch
- ,2 )){
-
-139 
-	`iowrôe32
-–0b1 << 
-Àd_blue_pö
-, 
-gpio_b_dr_vm
-);
-
-140 
-	`°r˝y
-–
-°r_cmd
-,"LED ON");
-
-142 i‡–!
-	`°∫cmp
-("OFF",
-ch
-,3 ) ){
-
-143 
-°r_cmd
-[] = "LED OFF";
-
-144 
-	`iowrôe32
-–0b0 << 
-Àd_blue_pö
-, 
-gpio_b_dr_vm
-);
-
-145 
-	`°r˝y
-–
-°r_cmd
-,"LED ON");
-
-147  
-sz
-;
-
-148 
+93 
 	}
 }
 
-150 
+94 
 	$›í_‚
  (
 öode
@@ -1303,17 +1047,21 @@ fûe
 kl
 ){
 
-158 
+95 
+	`gpio_£tup
+();
+
+96 
 	`¥ötk
 (
 KERN_INFO
- "open_fn called !");
+ "open_fn called !\n");
 
-160 
+98 
 	}
 }
 
-162 
+99 
 	$ªÀa£_‚
 (
 öode
@@ -1325,263 +1073,839 @@ fûe
 kl
 ){
 
-168 
+100 
+	`gpio_‰ì
+–
+LED_GPIO
+ );
+
+101 
+	`gpio_‰ì
+–
+BTN_GPIO
+ );
+
+102 
 	`¥ötk
 (
 KERN_INFO
- "close_fn called !");
+ "close_fn called !\n");
 
-170 
+104 
 	}
 }
 
-172 
-	$£tup
- (){
+105 
+	$gpio_£tup
+(){
 
-174 
-	#mask_pö
- 0b1 << 
-Àd_blue_pö
+106 i‡–!
+	`gpio_is_vÆid
+(
+LED_GPIO
+) ) {
+
+107 
+	`¥ötk
+(
+KERN_INFO
+ "GPIO isÇot valid .. \n"); }
+
+109 i‡–
+ENOSYS
+ =
+	`gpio_ªque°
+(
+LED_GPIO
+, "LED") ) {
+
+110 
+	`¥ötk
+(
+KERN_INFO
+ "Invalid syscall gpio_reques LED\n"); }
+
+111 i‡–
+ENOSYS
+ =
+	`gpio_ªque°
+(
+BTN_GPIO
+, "BTN") ) {
+
+112 
+	`¥ötk
+(
+KERN_INFO
+ "Invalid syscall gpio_reques BTN\n"); }
+
+113 i‡–!
+	`gpio_dúe˘i⁄_ouçut
+ ( 
+LED_GPIO
+ ) ){
+
+114 
+	`¥ötk
+(
+KERN_INFO
+ "can't set gpioás output for LED\n"); }
+
+115 i‡–!
+	`gpio_dúe˘i⁄_öput
+–
+BTN_GPIO
+ ) ){
+
+116 
+	`¥ötk
+(
+KERN_INFO
+ "can't set gpioás output for BTN\n"); }
+
+118 
+	`gpio_£t_vÆue
+ (
+LED_GPIO
+ , 0);
+
+119 
+	}
+}
+
+	@my_driver.h
+
+1 
+	~"my_drivî_gíîic.h
+"
+
+2 #i‚de‡
+MY_DRIVER_H
+
+
+3 
+	#MY_DRIVER_H
 
 
 	)
 
-178 
-u32
+6 
+	#gpio_b_ba£_addr
+ (0x20A4000)
+
+	)
+
+7 
+	#gpio_y_ba£_addr
+ (0x20B4000)
+
+	)
+
+8 
+	#gpio_r_ba£_addr
+ (0x209C000)
+
+	)
+
+9 
+	#gpio_b_dr
  
-ªad
- = 
-	`i‹ód32
-(
-gpio_b_gdú_vm
-);
+gpio_b_ba£_addr
 
-180 
-	`¥ötk
-(
-KERN_INFO
- "ªg vÆ: %x",
-ªad
-);
 
-182 
-	`iowrôe32
-–
-mask_pö
- , 
-gpio_b_gdú_vm
-);
+	)
 
-183 
-ªad
- = 
-	`i‹ód32
-(
-gpio_b_gdú_vm
-);
+10 
+	#gpio_y_dr
+ 
+gpio_y_ba£_addr
 
-184 
-	`¥ötk
-(
-KERN_INFO
- "ªg vÆ: %x",
-ªad
-);
 
-185 
-	}
-}
+	)
 
-	@my_driver.mod.c
+11 
+	#gpio_r_dr
+ 
+gpio_r_ba£_addr
 
-1 
-	~<löux/moduÀ.h
->
 
-2 
-	~<löux/vîmagic.h
->
+	)
 
-3 
-	~<löux/compûî.h
->
+12 
+	#gpio_b_gdú
+ (
+gpio_b_ba£_addr
++0x04)
 
-5 
-MODULE_INFO
-(
-vîmagic
+	)
+
+13 
+	#gpio_y_gdú
+ (
+gpio_y_ba£_addr
++0x04)
+
+	)
+
+14 
+	#gpio_r_gdú
+ (
+gpio_r_ba£_addr
++0x04)
+
+	)
+
+16 
+	#Àd_blue_pö
+ (26)
+
+	)
+
+17 
+	#Àd_yñlow_pö
+ (8)
+
+	)
+
+18 
+	#Àd_ªd_pö
+ (24)
+
+	)
+
+22 
+__iomem
+* 
+	ggpio_b_gdú_vm
+;
+
+23 
+__iomem
+* 
+	ggpio_b_dr_vm
+ ;
+
+24 
+__iomem
+* 
+	ggpio_y_gdú_vm
+;
+
+25 
+__iomem
+* 
+	ggpio_y_dr_vm
+ ;
+
+26 
+__iomem
+* 
+	ggpio_r_gdú_vm
+;
+
+27 
+__iomem
+* 
+	ggpio_r_dr_vm
+ ;
+
+29 
+devi˚
+ * 
+	gmy_devi˚
+ ;
+
+30 
+˛ass
+ * 
+	gmy_˛ass
+ ;
+
+31 
+	gmaj‹
+ ;
+
+32 
+	g°r_cmd
+ [20] ;
+
+35 
+£tup
+ ();
+
+36 
+ssize_t
+ 
+ªad_‚
+ (
+fûe
+ *, *, 
+size_t
 , 
-VERMAGIC_STRING
+loff_t
+ *);
+
+37 
+ssize_t
+ 
+wrôe_‚
+ (
+fûe
+ *, c⁄° *, 
+size_t
+, 
+loff_t
+ *);
+
+38 
+›í_‚
+ (
+öode
+ *, 
+fûe
+ *);
+
+39 
+ªÀa£_‚
+ (
+öode
+ *, 
+fûe
+ *);
+
+40 
+io˘l_‚
+(
+fûe
+ *
+Ê
+,
+cmd
+, 
+¨g
 );
 
-7 
-__visibÀ
- 
-moduÀ
+41 
+unM≠
+();
+
+42 
+m≠Io
+();
+
+43 
+ÀdAŒ
+–
+¨g
+ );
+
+44 
+gpio_£tup
+();
+
+47 
+fûe_›î©i⁄s
  
-__this_moduÀ
+	gf›s
+ = {
 
-
-8 
-__©åibuã__
-((
-£˘i⁄
-(".gnu.linkonce.this_module"))) = {
-
-9 .
-«me
- = 
-KBUILD_MODNAME
+48 
+ow√r
+: 
+THIS_MODULE
 ,
 
-10 .
-	göô
- = 
-öô_moduÀ
+49 
+ªad
+ : 
+ªad_‚
 ,
 
-11 #ifde‡
-CONFIG_MODULE_UNLOAD
-
-
-12 .
-	gexô
- = 
-˛ónup_moduÀ
+50 
+wrôe
+ : 
+wrôe_‚
 ,
 
-14 .
-	g¨ch
- = 
-MODULE_ARCH_INIT
+51 
+›í
+ : 
+›í_‚
 ,
 
-17 c⁄° 
-modvîsi⁄_öfo
+52 
+ªÀa£
+ : 
+ªÀa£_‚
+,
+
+53 
+u∆ocked_io˘l
+ : 
+io˘l_‚
+
+
+56 
+	#DEVICE_NAME
+ "my_drivî"
+
+	)
+
+57 
+	#DEVICE_CLASS
+ "my_drivî_˛ass"
+
+	)
+
+60 
+MODULE_LICENSE
+("GPL");
+
+61 
+MODULE_AUTHOR
+("ARUN JYOTHISH K");
+
+62 
+MODULE_DESCRIPTION
+(" device description my device driver .. ");
+
+63 
+MODULE_VERSION
+("1.0");
+
+	@my_driver_generic.h
+
+1 #i‚de‡
+MY_DRIVER_GENERIC_H
+
+
+2 
+	#MY_DRIVER_GENERIC_H
+
+
+	)
+
+4 
+	#WR_VALUE
  
-	g____vîsi⁄s
-[]
+	`_IOW
+('d','a', 
+öt32_t
+ *)
+
+	)
+
+5 
+	#RD_VALUE
+ 
+	`_IOW
+('d','b', 
+öt32_t
+ *)
+
+	)
+
+6 
+	#ON
+ 
+	`_IOW
+('d','b', 
+öt32_t
+ *)
+
+	)
+
+7 
+	#OFF
+ 
+	`_IOW
+('d','c', 
+öt32_t
+ *)
+
+	)
+
+9 
+	#POLL
+ 
+	`_IOW
+('d','d', 
+öt32_t
+ *)
+
+	)
+
+10 
+	#INT
+ 
+	`_IOW
+('d','e', 
+öt32_t
+ *)
+
+	)
+
+12 
+	#LIGHT_ON
+ 1
+
+	)
+
+13 
+	#LIGHT_OFF
+ 0
+
+	)
+
+15 
+	e°©us
+{
+
+16 
+	mOPEN_SUCC
+ = 8001,
+
+17 
+	mOPEN_FAIL
+,
 
 18 
-__u£d
-
+	mREAD_SUCC
+,
 
 19 
-__©åibuã__
-((
-£˘i⁄
-("__versions"))) = {
+	mREAD_FAIL
+,
 
-20 { 0xÁ985410, 
-__VMLINUX_SYMBOL_STR
-(
-moduÀ_œyout
-) },
+20 
+	mWRITE_SUCC
+,
 
-21 { 0x265adf97, 
-__VMLINUX_SYMBOL_STR
-(
-˛ass_uƒegi°î
-) },
+21 
+	mWRITE_FAIL
+,
 
-22 { 0x584166cc, 
-__VMLINUX_SYMBOL_STR
-(
-devi˚_de°roy
-) },
+22 
+	mINIT_SUCC
+,
 
-23 { 0xc2165d85, 
-__VMLINUX_SYMBOL_STR
-(
-__¨m_iounm≠
-) },
+	@/usr/include/linux/errno.h
 
-24 { 0x495be299, 
-__VMLINUX_SYMBOL_STR
-(
-˛ass_de°roy
-) },
+1 
+	~<asm/î∫o.h
+>
 
-25 { 0x6bc3fbc0, 
-__VMLINUX_SYMBOL_STR
-(
-__uƒegi°î_chrdev
-) },
+	@/usr/include/linux/fcntl.h
 
-26 { 0xfb961d14, 
-__VMLINUX_SYMBOL_STR
-(
-__¨m_i‹em≠
-) },
-
-27 { 0xÁˇ„b, 
-__VMLINUX_SYMBOL_STR
-(
-devi˚_¸óã
-) },
-
-28 { 0x3c8c7d13, 
-__VMLINUX_SYMBOL_STR
-(
-__˛ass_¸óã
-) },
-
-29 { 0x34fbc3de, 
-__VMLINUX_SYMBOL_STR
-(
-__ªgi°î_chrdev
-) },
-
-30 { 0x84b183´, 
-__VMLINUX_SYMBOL_STR
-(
-°∫cmp
-) },
-
-31 { 0x67c2Á54, 
-__VMLINUX_SYMBOL_STR
-(
-__c›y_to_u£r
-) },
-
-32 { 0x5dcf6341, 
-__VMLINUX_SYMBOL_STR
-(
-ouãr_ˇche
-) },
-
-33 { 0xefd6cf06, 
-__VMLINUX_SYMBOL_STR
-(
-__´abi_unwöd_˝p_¥0
-) },
-
-34 { 0x27e1a049, 
-__VMLINUX_SYMBOL_STR
-(
-¥ötk
-) },
-
-37 c⁄° 
-	g__moduÀ_dïíds
-[]
-
-38 
-__u£d
+2 #i‚de‡
+_LINUX_FCNTL_H
 
 
-39 
-__©åibuã__
-((
-£˘i⁄
-(".modinfo"))) =
+3 
+	#_LINUX_FCNTL_H
 
-43 
-MODULE_INFO
-(
-§cvîsi⁄
-, "2BB3301B3EA0CB2C456E719");
+
+	)
+
+5 
+	~<asm/f˙é.h
+>
+
+6 
+	~<löux/›í©2.h
+>
+
+8 
+	#F_SETLEASE
+ (
+F_LINUX_SPECIFIC_BASE
+ + 0)
+
+	)
+
+9 
+	#F_GETLEASE
+ (
+F_LINUX_SPECIFIC_BASE
+ + 1)
+
+	)
+
+15 
+	#F_CANCELLK
+ (
+F_LINUX_SPECIFIC_BASE
+ + 5)
+
+	)
+
+18 
+	#F_DUPFD_CLOEXEC
+ (
+F_LINUX_SPECIFIC_BASE
+ + 6)
+
+	)
+
+24 
+	#F_NOTIFY
+ (
+F_LINUX_SPECIFIC_BASE
++2)
+
+	)
+
+29 
+	#F_SETPIPE_SZ
+ (
+F_LINUX_SPECIFIC_BASE
+ + 7)
+
+	)
+
+30 
+	#F_GETPIPE_SZ
+ (
+F_LINUX_SPECIFIC_BASE
+ + 8)
+
+	)
+
+35 
+	#F_ADD_SEALS
+ (
+F_LINUX_SPECIFIC_BASE
+ + 9)
+
+	)
+
+36 
+	#F_GET_SEALS
+ (
+F_LINUX_SPECIFIC_BASE
+ + 10)
+
+	)
+
+41 
+	#F_SEAL_SEAL
+ 0x0001
+
+	)
+
+42 
+	#F_SEAL_SHRINK
+ 0x0002
+
+	)
+
+43 
+	#F_SEAL_GROW
+ 0x0004
+
+	)
+
+44 
+	#F_SEAL_WRITE
+ 0x0008
+
+	)
+
+45 
+	#F_SEAL_FUTURE_WRITE
+ 0x0010
+
+	)
+
+53 
+	#F_GET_RW_HINT
+ (
+F_LINUX_SPECIFIC_BASE
+ + 11)
+
+	)
+
+54 
+	#F_SET_RW_HINT
+ (
+F_LINUX_SPECIFIC_BASE
+ + 12)
+
+	)
+
+55 
+	#F_GET_FILE_RW_HINT
+ (
+F_LINUX_SPECIFIC_BASE
+ + 13)
+
+	)
+
+56 
+	#F_SET_FILE_RW_HINT
+ (
+F_LINUX_SPECIFIC_BASE
+ + 14)
+
+	)
+
+62 
+	#RWH_WRITE_LIFE_NOT_SET
+ 0
+
+	)
+
+63 
+	#RWH_WRITE_LIFE_NONE
+ 1
+
+	)
+
+64 
+	#RWH_WRITE_LIFE_SHORT
+ 2
+
+	)
+
+65 
+	#RWH_WRITE_LIFE_MEDIUM
+ 3
+
+	)
+
+66 
+	#RWH_WRITE_LIFE_LONG
+ 4
+
+	)
+
+67 
+	#RWH_WRITE_LIFE_EXTREME
+ 5
+
+	)
+
+74 
+	#RWF_WRITE_LIFE_NOT_SET
+ 
+RWH_WRITE_LIFE_NOT_SET
+
+
+	)
+
+79 
+	#DN_ACCESS
+ 0x00000001
+
+	)
+
+80 
+	#DN_MODIFY
+ 0x00000002
+
+	)
+
+81 
+	#DN_CREATE
+ 0x00000004
+
+	)
+
+82 
+	#DN_DELETE
+ 0x00000008
+
+	)
+
+83 
+	#DN_RENAME
+ 0x00000010
+
+	)
+
+84 
+	#DN_ATTRIB
+ 0x00000020
+
+	)
+
+85 
+	#DN_MULTISHOT
+ 0x80000000
+
+	)
+
+95 
+	#AT_FDCWD
+ -100
+
+	)
+
+98 
+	#AT_SYMLINK_NOFOLLOW
+ 0x100
+
+	)
+
+99 
+	#AT_EACCESS
+ 0x200
+
+	)
+
+101 
+	#AT_REMOVEDIR
+ 0x200
+
+	)
+
+103 
+	#AT_SYMLINK_FOLLOW
+ 0x400
+
+	)
+
+104 
+	#AT_NO_AUTOMOUNT
+ 0x800
+
+	)
+
+105 
+	#AT_EMPTY_PATH
+ 0x1000
+
+	)
+
+107 
+	#AT_STATX_SYNC_TYPE
+ 0x6000
+
+	)
+
+108 
+	#AT_STATX_SYNC_AS_STAT
+ 0x0000
+
+	)
+
+109 
+	#AT_STATX_FORCE_SYNC
+ 0x2000
+
+	)
+
+110 
+	#AT_STATX_DONT_SYNC
+ 0x4000
+
+	)
+
+112 
+	#AT_RECURSIVE
+ 0x8000
+
+	)
 
 	@/usr/include/linux/fs.h
 
@@ -2771,6 +3095,926 @@ RWF_APPEND
 
 	)
 
+	@/usr/include/linux/gpio.h
+
+11 #i‚de‡
+_GPIO_H_
+
+
+12 
+	#_GPIO_H_
+
+
+	)
+
+14 
+	~<löux/c⁄°.h
+>
+
+15 
+	~<löux/io˘l.h
+>
+
+16 
+	~<löux/ty≥s.h
+>
+
+23 
+	#GPIO_MAX_NAME_SIZE
+ 32
+
+	)
+
+32 
+	sgpiochù_öfo
+ {
+
+33 
+	m«me
+[
+GPIO_MAX_NAME_SIZE
+];
+
+34 
+	mœbñ
+[
+GPIO_MAX_NAME_SIZE
+];
+
+35 
+__u32
+ 
+	mlöes
+;
+
+45 
+	#GPIO_V2_LINES_MAX
+ 64
+
+	)
+
+51 
+	#GPIO_V2_LINE_NUM_ATTRS_MAX
+ 10
+
+	)
+
+70 
+	egpio_v2_löe_Êag
+ {
+
+71 
+	mGPIO_V2_LINE_FLAG_USED
+ = 
+_BITULL
+(0),
+
+72 
+	mGPIO_V2_LINE_FLAG_ACTIVE_LOW
+ = 
+_BITULL
+(1),
+
+73 
+	mGPIO_V2_LINE_FLAG_INPUT
+ = 
+_BITULL
+(2),
+
+74 
+	mGPIO_V2_LINE_FLAG_OUTPUT
+ = 
+_BITULL
+(3),
+
+75 
+	mGPIO_V2_LINE_FLAG_EDGE_RISING
+ = 
+_BITULL
+(4),
+
+76 
+	mGPIO_V2_LINE_FLAG_EDGE_FALLING
+ = 
+_BITULL
+(5),
+
+77 
+	mGPIO_V2_LINE_FLAG_OPEN_DRAIN
+ = 
+_BITULL
+(6),
+
+78 
+	mGPIO_V2_LINE_FLAG_OPEN_SOURCE
+ = 
+_BITULL
+(7),
+
+79 
+	mGPIO_V2_LINE_FLAG_BIAS_PULL_UP
+ = 
+_BITULL
+(8),
+
+80 
+	mGPIO_V2_LINE_FLAG_BIAS_PULL_DOWN
+ = 
+_BITULL
+(9),
+
+81 
+	mGPIO_V2_LINE_FLAG_BIAS_DISABLED
+ = 
+_BITULL
+(10),
+
+82 
+	mGPIO_V2_LINE_FLAG_EVENT_CLOCK_REALTIME
+ = 
+_BITULL
+(11),
+
+93 
+	sgpio_v2_löe_vÆues
+ {
+
+94 
+__Æig√d_u64
+ 
+	mbôs
+;
+
+95 
+__Æig√d_u64
+ 
+	mmask
+;
+
+105 
+	egpio_v2_löe_©å_id
+ {
+
+106 
+	mGPIO_V2_LINE_ATTR_ID_FLAGS
+ = 1,
+
+107 
+	mGPIO_V2_LINE_ATTR_ID_OUTPUT_VALUES
+ = 2,
+
+108 
+	mGPIO_V2_LINE_ATTR_ID_DEBOUNCE
+ = 3,
+
+127 
+	sgpio_v2_löe_©åibuã
+ {
+
+128 
+__u32
+ 
+	mid
+;
+
+129 
+__u32
+ 
+	m∑ddög
+;
+
+131 
+__Æig√d_u64
+ 
+	mÊags
+;
+
+132 
+__Æig√d_u64
+ 
+	mvÆues
+;
+
+133 
+__u32
+ 
+	mdeboun˚_≥riod_us
+;
+
+145 
+	sgpio_v2_löe_c⁄fig_©åibuã
+ {
+
+146 
+gpio_v2_löe_©åibuã
+ 
+	m©å
+;
+
+147 
+__Æig√d_u64
+ 
+	mmask
+;
+
+164 
+	sgpio_v2_löe_c⁄fig
+ {
+
+165 
+__Æig√d_u64
+ 
+	mÊags
+;
+
+166 
+__u32
+ 
+	mnum_©ås
+;
+
+168 
+__u32
+ 
+	m∑ddög
+[5];
+
+169 
+gpio_v2_löe_c⁄fig_©åibuã
+ 
+	m©ås
+[
+GPIO_V2_LINE_NUM_ATTRS_MAX
+];
+
+193 
+	sgpio_v2_löe_ªque°
+ {
+
+194 
+__u32
+ 
+	moff£ts
+[
+GPIO_V2_LINES_MAX
+];
+
+195 
+	mc⁄sumî
+[
+GPIO_MAX_NAME_SIZE
+];
+
+196 
+gpio_v2_löe_c⁄fig
+ 
+	mc⁄fig
+;
+
+197 
+__u32
+ 
+	mnum_löes
+;
+
+198 
+__u32
+ 
+	mevít_buf„r_size
+;
+
+200 
+__u32
+ 
+	m∑ddög
+[5];
+
+201 
+__s32
+ 
+	mfd
+;
+
+221 
+	sgpio_v2_löe_öfo
+ {
+
+222 
+	m«me
+[
+GPIO_MAX_NAME_SIZE
+];
+
+223 
+	mc⁄sumî
+[
+GPIO_MAX_NAME_SIZE
+];
+
+224 
+__u32
+ 
+	moff£t
+;
+
+225 
+__u32
+ 
+	mnum_©ås
+;
+
+226 
+__Æig√d_u64
+ 
+	mÊags
+;
+
+227 
+gpio_v2_löe_©åibuã
+ 
+	m©ås
+[
+GPIO_V2_LINE_NUM_ATTRS_MAX
+];
+
+229 
+__u32
+ 
+	m∑ddög
+[4];
+
+239 
+	egpio_v2_löe_ch™ged_ty≥
+ {
+
+240 
+	mGPIO_V2_LINE_CHANGED_REQUESTED
+ = 1,
+
+241 
+	mGPIO_V2_LINE_CHANGED_RELEASED
+ = 2,
+
+242 
+	mGPIO_V2_LINE_CHANGED_CONFIG
+ = 3,
+
+254 
+	sgpio_v2_löe_öfo_ch™ged
+ {
+
+255 
+gpio_v2_löe_öfo
+ 
+	möfo
+;
+
+256 
+__Æig√d_u64
+ 
+	mtime°amp_ns
+;
+
+257 
+__u32
+ 
+	mevít_ty≥
+;
+
+259 
+__u32
+ 
+	m∑ddög
+[5];
+
+267 
+	egpio_v2_löe_evít_id
+ {
+
+268 
+	mGPIO_V2_LINE_EVENT_RISING_EDGE
+ = 1,
+
+269 
+	mGPIO_V2_LINE_EVENT_FALLING_EDGE
+ = 2,
+
+290 
+	sgpio_v2_löe_evít
+ {
+
+291 
+__Æig√d_u64
+ 
+	mtime°amp_ns
+;
+
+292 
+__u32
+ 
+	mid
+;
+
+293 
+__u32
+ 
+	moff£t
+;
+
+294 
+__u32
+ 
+	m£qno
+;
+
+295 
+__u32
+ 
+	mlöe_£qno
+;
+
+297 
+__u32
+ 
+	m∑ddög
+[6];
+
+308 
+	#GPIOLINE_FLAG_KERNEL
+ (1UL << 0Ë
+
+	)
+
+309 
+	#GPIOLINE_FLAG_IS_OUT
+ (1UL << 1)
+
+	)
+
+310 
+	#GPIOLINE_FLAG_ACTIVE_LOW
+ (1UL << 2)
+
+	)
+
+311 
+	#GPIOLINE_FLAG_OPEN_DRAIN
+ (1UL << 3)
+
+	)
+
+312 
+	#GPIOLINE_FLAG_OPEN_SOURCE
+ (1UL << 4)
+
+	)
+
+313 
+	#GPIOLINE_FLAG_BIAS_PULL_UP
+ (1UL << 5)
+
+	)
+
+314 
+	#GPIOLINE_FLAG_BIAS_PULL_DOWN
+ (1UL << 6)
+
+	)
+
+315 
+	#GPIOLINE_FLAG_BIAS_DISABLE
+ (1UL << 7)
+
+	)
+
+332 
+	sgpiﬁöe_öfo
+ {
+
+333 
+__u32
+ 
+	mlöe_off£t
+;
+
+334 
+__u32
+ 
+	mÊags
+;
+
+335 
+	m«me
+[
+GPIO_MAX_NAME_SIZE
+];
+
+336 
+	mc⁄sumî
+[
+GPIO_MAX_NAME_SIZE
+];
+
+340 
+	#GPIOHANDLES_MAX
+ 64
+
+	)
+
+344 
+	mGPIOLINE_CHANGED_REQUESTED
+ = 1,
+
+345 
+	mGPIOLINE_CHANGED_RELEASED
+,
+
+346 
+	mGPIOLINE_CHANGED_CONFIG
+,
+
+367 
+	sgpiﬁöe_öfo_ch™ged
+ {
+
+368 
+gpiﬁöe_öfo
+ 
+	möfo
+;
+
+369 
+__u64
+ 
+	mtime°amp
+;
+
+370 
+__u32
+ 
+	mevít_ty≥
+;
+
+371 
+__u32
+ 
+	m∑ddög
+[5];
+
+375 
+	#GPIOHANDLE_REQUEST_INPUT
+ (1UL << 0)
+
+	)
+
+376 
+	#GPIOHANDLE_REQUEST_OUTPUT
+ (1UL << 1)
+
+	)
+
+377 
+	#GPIOHANDLE_REQUEST_ACTIVE_LOW
+ (1UL << 2)
+
+	)
+
+378 
+	#GPIOHANDLE_REQUEST_OPEN_DRAIN
+ (1UL << 3)
+
+	)
+
+379 
+	#GPIOHANDLE_REQUEST_OPEN_SOURCE
+ (1UL << 4)
+
+	)
+
+380 
+	#GPIOHANDLE_REQUEST_BIAS_PULL_UP
+ (1UL << 5)
+
+	)
+
+381 
+	#GPIOHANDLE_REQUEST_BIAS_PULL_DOWN
+ (1UL << 6)
+
+	)
+
+382 
+	#GPIOHANDLE_REQUEST_BIAS_DISABLE
+ (1UL << 7)
+
+	)
+
+409 
+	sgpioh™dÀ_ªque°
+ {
+
+410 
+__u32
+ 
+	mlöeoff£ts
+[
+GPIOHANDLES_MAX
+];
+
+411 
+__u32
+ 
+	mÊags
+;
+
+412 
+__u8
+ 
+	mdeÁu…_vÆues
+[
+GPIOHANDLES_MAX
+];
+
+413 
+	mc⁄sumî_œbñ
+[
+GPIO_MAX_NAME_SIZE
+];
+
+414 
+__u32
+ 
+	mlöes
+;
+
+415 
+	mfd
+;
+
+431 
+	sgpioh™dÀ_c⁄fig
+ {
+
+432 
+__u32
+ 
+	mÊags
+;
+
+433 
+__u8
+ 
+	mdeÁu…_vÆues
+[
+GPIOHANDLES_MAX
+];
+
+434 
+__u32
+ 
+	m∑ddög
+[4];
+
+446 
+	sgpioh™dÀ_d©a
+ {
+
+447 
+__u8
+ 
+	mvÆues
+[
+GPIOHANDLES_MAX
+];
+
+451 
+	#GPIOEVENT_REQUEST_RISING_EDGE
+ (1UL << 0)
+
+	)
+
+452 
+	#GPIOEVENT_REQUEST_FALLING_EDGE
+ (1UL << 1)
+
+	)
+
+453 
+	#GPIOEVENT_REQUEST_BOTH_EDGES
+ ((1UL << 0Ë| (1UL << 1))
+
+	)
+
+472 
+	sgpi€vít_ªque°
+ {
+
+473 
+__u32
+ 
+	mlöeoff£t
+;
+
+474 
+__u32
+ 
+	mh™dÀÊags
+;
+
+475 
+__u32
+ 
+	mevítÊags
+;
+
+476 
+	mc⁄sumî_œbñ
+[
+GPIO_MAX_NAME_SIZE
+];
+
+477 
+	mfd
+;
+
+483 
+	#GPIOEVENT_EVENT_RISING_EDGE
+ 0x01
+
+	)
+
+484 
+	#GPIOEVENT_EVENT_FALLING_EDGE
+ 0x02
+
+	)
+
+494 
+	sgpi€vít_d©a
+ {
+
+495 
+__u64
+ 
+	mtime°amp
+;
+
+496 
+__u32
+ 
+	mid
+;
+
+502 
+	#GPIO_GET_CHIPINFO_IOCTL
+ 
+	`_IOR
+(0xB4, 0x01, 
+gpiochù_öfo
+)
+
+	)
+
+503 
+	#GPIO_GET_LINEINFO_UNWATCH_IOCTL
+ 
+	`_IOWR
+(0xB4, 0x0C, 
+__u32
+)
+
+	)
+
+508 
+	#GPIO_V2_GET_LINEINFO_IOCTL
+ 
+	`_IOWR
+(0xB4, 0x05, 
+gpio_v2_löe_öfo
+)
+
+	)
+
+509 
+	#GPIO_V2_GET_LINEINFO_WATCH_IOCTL
+ 
+	`_IOWR
+(0xB4, 0x06, 
+gpio_v2_löe_öfo
+)
+
+	)
+
+510 
+	#GPIO_V2_GET_LINE_IOCTL
+ 
+	`_IOWR
+(0xB4, 0x07, 
+gpio_v2_löe_ªque°
+)
+
+	)
+
+511 
+	#GPIO_V2_LINE_SET_CONFIG_IOCTL
+ 
+	`_IOWR
+(0xB4, 0x0D, 
+gpio_v2_löe_c⁄fig
+)
+
+	)
+
+512 
+	#GPIO_V2_LINE_GET_VALUES_IOCTL
+ 
+	`_IOWR
+(0xB4, 0x0E, 
+gpio_v2_löe_vÆues
+)
+
+	)
+
+513 
+	#GPIO_V2_LINE_SET_VALUES_IOCTL
+ 
+	`_IOWR
+(0xB4, 0x0F, 
+gpio_v2_löe_vÆues
+)
+
+	)
+
+520 
+	#GPIO_GET_LINEINFO_IOCTL
+ 
+	`_IOWR
+(0xB4, 0x02, 
+gpiﬁöe_öfo
+)
+
+	)
+
+521 
+	#GPIO_GET_LINEHANDLE_IOCTL
+ 
+	`_IOWR
+(0xB4, 0x03, 
+gpioh™dÀ_ªque°
+)
+
+	)
+
+522 
+	#GPIO_GET_LINEEVENT_IOCTL
+ 
+	`_IOWR
+(0xB4, 0x04, 
+gpi€vít_ªque°
+)
+
+	)
+
+523 
+	#GPIOHANDLE_GET_LINE_VALUES_IOCTL
+ 
+	`_IOWR
+(0xB4, 0x08, 
+gpioh™dÀ_d©a
+)
+
+	)
+
+524 
+	#GPIOHANDLE_SET_LINE_VALUES_IOCTL
+ 
+	`_IOWR
+(0xB4, 0x09, 
+gpioh™dÀ_d©a
+)
+
+	)
+
+525 
+	#GPIOHANDLE_SET_CONFIG_IOCTL
+ 
+	`_IOWR
+(0xB4, 0x0A, 
+gpioh™dÀ_c⁄fig
+)
+
+	)
+
+526 
+	#GPIO_GET_LINEINFO_WATCH_IOCTL
+ 
+	`_IOWR
+(0xB4, 0x0B, 
+gpiﬁöe_öfo
+)
+
+	)
+
 	@/usr/include/linux/ioctl.h
 
 2 #i‚de‡
@@ -3004,6 +4248,1086 @@ __À64
  
 	t__pﬁl_t
 ;
+
+	@/usr/include/stdint.h
+
+22 #i‚de‡
+_STDINT_H
+
+
+23 
+	#_STDINT_H
+ 1
+
+	)
+
+25 
+	#__GLIBC_INTERNAL_STARTING_HEADER_IMPLEMENTATION
+
+
+	)
+
+26 
+	~<bôs/libc-hódî-°¨t.h
+>
+
+27 
+	~<bôs/ty≥s.h
+>
+
+28 
+	~<bôs/wch¨.h
+>
+
+29 
+	~<bôs/w‹dsize.h
+>
+
+34 
+	~<bôs/°döt-öä.h
+>
+
+37 
+	~<bôs/°döt-uöä.h
+>
+
+43 
+__öt_Àa°8_t
+ 
+	töt_Àa°8_t
+;
+
+44 
+__öt_Àa°16_t
+ 
+	töt_Àa°16_t
+;
+
+45 
+__öt_Àa°32_t
+ 
+	töt_Àa°32_t
+;
+
+46 
+__öt_Àa°64_t
+ 
+	töt_Àa°64_t
+;
+
+49 
+__uöt_Àa°8_t
+ 
+	tuöt_Àa°8_t
+;
+
+50 
+__uöt_Àa°16_t
+ 
+	tuöt_Àa°16_t
+;
+
+51 
+__uöt_Àa°32_t
+ 
+	tuöt_Àa°32_t
+;
+
+52 
+__uöt_Àa°64_t
+ 
+	tuöt_Àa°64_t
+;
+
+58 sig√d 
+	töt_Á°8_t
+;
+
+59 #i‡
+__WORDSIZE
+ == 64
+
+60 
+	töt_Á°16_t
+;
+
+61 
+	töt_Á°32_t
+;
+
+62 
+	töt_Á°64_t
+;
+
+64 
+	töt_Á°16_t
+;
+
+65 
+	töt_Á°32_t
+;
+
+66 
+__exãnsi⁄__
+
+
+67 
+	töt_Á°64_t
+;
+
+71 
+	tuöt_Á°8_t
+;
+
+72 #i‡
+__WORDSIZE
+ == 64
+
+73 
+	tuöt_Á°16_t
+;
+
+74 
+	tuöt_Á°32_t
+;
+
+75 
+	tuöt_Á°64_t
+;
+
+77 
+	tuöt_Á°16_t
+;
+
+78 
+	tuöt_Á°32_t
+;
+
+79 
+__exãnsi⁄__
+
+
+80 
+	tuöt_Á°64_t
+;
+
+85 #i‡
+__WORDSIZE
+ == 64
+
+86 #i‚de‡
+__öçå_t_deföed
+
+
+87 
+	töçå_t
+;
+
+88 
+	#__öçå_t_deföed
+
+
+	)
+
+90 
+	tuöçå_t
+;
+
+92 #i‚de‡
+__öçå_t_deföed
+
+
+93 
+	töçå_t
+;
+
+94 
+	#__öçå_t_deföed
+
+
+	)
+
+96 
+	tuöçå_t
+;
+
+101 
+__ötmax_t
+ 
+	tötmax_t
+;
+
+102 
+__uötmax_t
+ 
+	tuötmax_t
+;
+
+105 #i‡
+__WORDSIZE
+ == 64
+
+106 
+	#__INT64_C
+(
+c
+Ë¯## 
+L
+
+
+	)
+
+107 
+	#__UINT64_C
+(
+c
+Ë¯## 
+UL
+
+
+	)
+
+109 
+	#__INT64_C
+(
+c
+Ë¯## 
+LL
+
+
+	)
+
+110 
+	#__UINT64_C
+(
+c
+Ë¯## 
+ULL
+
+
+	)
+
+116 
+	#INT8_MIN
+ (-128)
+
+	)
+
+117 
+	#INT16_MIN
+ (-32767-1)
+
+	)
+
+118 
+	#INT32_MIN
+ (-2147483647-1)
+
+	)
+
+119 
+	#INT64_MIN
+ (-
+	`__INT64_C
+(9223372036854775807)-1)
+
+	)
+
+121 
+	#INT8_MAX
+ (127)
+
+	)
+
+122 
+	#INT16_MAX
+ (32767)
+
+	)
+
+123 
+	#INT32_MAX
+ (2147483647)
+
+	)
+
+124 
+	#INT64_MAX
+ (
+	`__INT64_C
+(9223372036854775807))
+
+	)
+
+127 
+	#UINT8_MAX
+ (255)
+
+	)
+
+128 
+	#UINT16_MAX
+ (65535)
+
+	)
+
+129 
+	#UINT32_MAX
+ (4294967295U)
+
+	)
+
+130 
+	#UINT64_MAX
+ (
+	`__UINT64_C
+(18446744073709551615))
+
+	)
+
+134 
+	#INT_LEAST8_MIN
+ (-128)
+
+	)
+
+135 
+	#INT_LEAST16_MIN
+ (-32767-1)
+
+	)
+
+136 
+	#INT_LEAST32_MIN
+ (-2147483647-1)
+
+	)
+
+137 
+	#INT_LEAST64_MIN
+ (-
+	`__INT64_C
+(9223372036854775807)-1)
+
+	)
+
+139 
+	#INT_LEAST8_MAX
+ (127)
+
+	)
+
+140 
+	#INT_LEAST16_MAX
+ (32767)
+
+	)
+
+141 
+	#INT_LEAST32_MAX
+ (2147483647)
+
+	)
+
+142 
+	#INT_LEAST64_MAX
+ (
+	`__INT64_C
+(9223372036854775807))
+
+	)
+
+145 
+	#UINT_LEAST8_MAX
+ (255)
+
+	)
+
+146 
+	#UINT_LEAST16_MAX
+ (65535)
+
+	)
+
+147 
+	#UINT_LEAST32_MAX
+ (4294967295U)
+
+	)
+
+148 
+	#UINT_LEAST64_MAX
+ (
+	`__UINT64_C
+(18446744073709551615))
+
+	)
+
+152 
+	#INT_FAST8_MIN
+ (-128)
+
+	)
+
+153 #i‡
+__WORDSIZE
+ == 64
+
+154 
+	#INT_FAST16_MIN
+ (-9223372036854775807L-1)
+
+	)
+
+155 
+	#INT_FAST32_MIN
+ (-9223372036854775807L-1)
+
+	)
+
+157 
+	#INT_FAST16_MIN
+ (-2147483647-1)
+
+	)
+
+158 
+	#INT_FAST32_MIN
+ (-2147483647-1)
+
+	)
+
+160 
+	#INT_FAST64_MIN
+ (-
+	`__INT64_C
+(9223372036854775807)-1)
+
+	)
+
+162 
+	#INT_FAST8_MAX
+ (127)
+
+	)
+
+163 #i‡
+__WORDSIZE
+ == 64
+
+164 
+	#INT_FAST16_MAX
+ (9223372036854775807L)
+
+	)
+
+165 
+	#INT_FAST32_MAX
+ (9223372036854775807L)
+
+	)
+
+167 
+	#INT_FAST16_MAX
+ (2147483647)
+
+	)
+
+168 
+	#INT_FAST32_MAX
+ (2147483647)
+
+	)
+
+170 
+	#INT_FAST64_MAX
+ (
+	`__INT64_C
+(9223372036854775807))
+
+	)
+
+173 
+	#UINT_FAST8_MAX
+ (255)
+
+	)
+
+174 #i‡
+__WORDSIZE
+ == 64
+
+175 
+	#UINT_FAST16_MAX
+ (18446744073709551615UL)
+
+	)
+
+176 
+	#UINT_FAST32_MAX
+ (18446744073709551615UL)
+
+	)
+
+178 
+	#UINT_FAST16_MAX
+ (4294967295U)
+
+	)
+
+179 
+	#UINT_FAST32_MAX
+ (4294967295U)
+
+	)
+
+181 
+	#UINT_FAST64_MAX
+ (
+	`__UINT64_C
+(18446744073709551615))
+
+	)
+
+185 #i‡
+__WORDSIZE
+ == 64
+
+186 
+	#INTPTR_MIN
+ (-9223372036854775807L-1)
+
+	)
+
+187 
+	#INTPTR_MAX
+ (9223372036854775807L)
+
+	)
+
+188 
+	#UINTPTR_MAX
+ (18446744073709551615UL)
+
+	)
+
+190 
+	#INTPTR_MIN
+ (-2147483647-1)
+
+	)
+
+191 
+	#INTPTR_MAX
+ (2147483647)
+
+	)
+
+192 
+	#UINTPTR_MAX
+ (4294967295U)
+
+	)
+
+197 
+	#INTMAX_MIN
+ (-
+	`__INT64_C
+(9223372036854775807)-1)
+
+	)
+
+199 
+	#INTMAX_MAX
+ (
+	`__INT64_C
+(9223372036854775807))
+
+	)
+
+202 
+	#UINTMAX_MAX
+ (
+	`__UINT64_C
+(18446744073709551615))
+
+	)
+
+208 #i‡
+__WORDSIZE
+ == 64
+
+209 
+	#PTRDIFF_MIN
+ (-9223372036854775807L-1)
+
+	)
+
+210 
+	#PTRDIFF_MAX
+ (9223372036854775807L)
+
+	)
+
+212 #i‡
+__WORDSIZE32_PTRDIFF_LONG
+
+
+213 
+	#PTRDIFF_MIN
+ (-2147483647L-1)
+
+	)
+
+214 
+	#PTRDIFF_MAX
+ (2147483647L)
+
+	)
+
+216 
+	#PTRDIFF_MIN
+ (-2147483647-1)
+
+	)
+
+217 
+	#PTRDIFF_MAX
+ (2147483647)
+
+	)
+
+222 
+	#SIG_ATOMIC_MIN
+ (-2147483647-1)
+
+	)
+
+223 
+	#SIG_ATOMIC_MAX
+ (2147483647)
+
+	)
+
+226 #i‡
+__WORDSIZE
+ == 64
+
+227 
+	#SIZE_MAX
+ (18446744073709551615UL)
+
+	)
+
+229 #i‡
+__WORDSIZE32_SIZE_ULONG
+
+
+230 
+	#SIZE_MAX
+ (4294967295UL)
+
+	)
+
+232 
+	#SIZE_MAX
+ (4294967295U)
+
+	)
+
+237 #i‚de‡
+WCHAR_MIN
+
+
+239 
+	#WCHAR_MIN
+ 
+__WCHAR_MIN
+
+
+	)
+
+240 
+	#WCHAR_MAX
+ 
+__WCHAR_MAX
+
+
+	)
+
+244 
+	#WINT_MIN
+ (0u)
+
+	)
+
+245 
+	#WINT_MAX
+ (4294967295u)
+
+	)
+
+248 
+	#INT8_C
+(
+c
+Ë
+	)
+c
+
+249 
+	#INT16_C
+(
+c
+Ë
+	)
+c
+
+250 
+	#INT32_C
+(
+c
+Ë
+	)
+c
+
+251 #i‡
+__WORDSIZE
+ == 64
+
+252 
+	#INT64_C
+(
+c
+Ë¯## 
+L
+
+
+	)
+
+254 
+	#INT64_C
+(
+c
+Ë¯## 
+LL
+
+
+	)
+
+258 
+	#UINT8_C
+(
+c
+Ë
+	)
+c
+
+259 
+	#UINT16_C
+(
+c
+Ë
+	)
+c
+
+260 
+	#UINT32_C
+(
+c
+Ë¯## 
+U
+
+
+	)
+
+261 #i‡
+__WORDSIZE
+ == 64
+
+262 
+	#UINT64_C
+(
+c
+Ë¯## 
+UL
+
+
+	)
+
+264 
+	#UINT64_C
+(
+c
+Ë¯## 
+ULL
+
+
+	)
+
+268 #i‡
+__WORDSIZE
+ == 64
+
+269 
+	#INTMAX_C
+(
+c
+Ë¯## 
+L
+
+
+	)
+
+270 
+	#UINTMAX_C
+(
+c
+Ë¯## 
+UL
+
+
+	)
+
+272 
+	#INTMAX_C
+(
+c
+Ë¯## 
+LL
+
+
+	)
+
+273 
+	#UINTMAX_C
+(
+c
+Ë¯## 
+ULL
+
+
+	)
+
+276 #i‡
+__GLIBC_USE
+ (
+IEC_60559_BFP_EXT_C2X
+)
+
+278 
+	#INT8_WIDTH
+ 8
+
+	)
+
+279 
+	#UINT8_WIDTH
+ 8
+
+	)
+
+280 
+	#INT16_WIDTH
+ 16
+
+	)
+
+281 
+	#UINT16_WIDTH
+ 16
+
+	)
+
+282 
+	#INT32_WIDTH
+ 32
+
+	)
+
+283 
+	#UINT32_WIDTH
+ 32
+
+	)
+
+284 
+	#INT64_WIDTH
+ 64
+
+	)
+
+285 
+	#UINT64_WIDTH
+ 64
+
+	)
+
+287 
+	#INT_LEAST8_WIDTH
+ 8
+
+	)
+
+288 
+	#UINT_LEAST8_WIDTH
+ 8
+
+	)
+
+289 
+	#INT_LEAST16_WIDTH
+ 16
+
+	)
+
+290 
+	#UINT_LEAST16_WIDTH
+ 16
+
+	)
+
+291 
+	#INT_LEAST32_WIDTH
+ 32
+
+	)
+
+292 
+	#UINT_LEAST32_WIDTH
+ 32
+
+	)
+
+293 
+	#INT_LEAST64_WIDTH
+ 64
+
+	)
+
+294 
+	#UINT_LEAST64_WIDTH
+ 64
+
+	)
+
+296 
+	#INT_FAST8_WIDTH
+ 8
+
+	)
+
+297 
+	#UINT_FAST8_WIDTH
+ 8
+
+	)
+
+298 
+	#INT_FAST16_WIDTH
+ 
+__WORDSIZE
+
+
+	)
+
+299 
+	#UINT_FAST16_WIDTH
+ 
+__WORDSIZE
+
+
+	)
+
+300 
+	#INT_FAST32_WIDTH
+ 
+__WORDSIZE
+
+
+	)
+
+301 
+	#UINT_FAST32_WIDTH
+ 
+__WORDSIZE
+
+
+	)
+
+302 
+	#INT_FAST64_WIDTH
+ 64
+
+	)
+
+303 
+	#UINT_FAST64_WIDTH
+ 64
+
+	)
+
+305 
+	#INTPTR_WIDTH
+ 
+__WORDSIZE
+
+
+	)
+
+306 
+	#UINTPTR_WIDTH
+ 
+__WORDSIZE
+
+
+	)
+
+308 
+	#INTMAX_WIDTH
+ 64
+
+	)
+
+309 
+	#UINTMAX_WIDTH
+ 64
+
+	)
+
+311 
+	#PTRDIFF_WIDTH
+ 
+__WORDSIZE
+
+
+	)
+
+312 
+	#SIG_ATOMIC_WIDTH
+ 32
+
+	)
+
+313 
+	#SIZE_WIDTH
+ 
+__WORDSIZE
+
+
+	)
+
+314 
+	#WCHAR_WIDTH
+ 32
+
+	)
+
+315 
+	#WINT_WIDTH
+ 32
+
+	)
 
 	@/usr/include/stdio.h
 
@@ -11621,6 +13945,80 @@ __u64
 
 	)
 
+	@/usr/include/linux/openat2.h
+
+2 #i‚de‡
+_LINUX_OPENAT2_H
+
+
+3 
+	#_LINUX_OPENAT2_H
+
+
+	)
+
+5 
+	~<löux/ty≥s.h
+>
+
+19 
+	s›í_how
+ {
+
+20 
+__u64
+ 
+	mÊags
+;
+
+21 
+__u64
+ 
+	mmode
+;
+
+22 
+__u64
+ 
+	mªsﬁve
+;
+
+26 
+	#RESOLVE_NO_XDEV
+ 0x01
+
+	)
+
+28 
+	#RESOLVE_NO_MAGICLINKS
+ 0x02
+
+	)
+
+30 
+	#RESOLVE_NO_SYMLINKS
+ 0x04
+
+	)
+
+32 
+	#RESOLVE_BENEATH
+ 0x08
+
+	)
+
+35 
+	#RESOLVE_IN_ROOT
+ 0x10
+
+	)
+
+38 
+	#RESOLVE_CACHED
+ 0x20
+
+	)
+
 	@/usr/include/linux/posix_types.h
 
 2 #i‚de‡
@@ -14572,20 +16970,24 @@ __USE_XOPEN2K8
 .
 1
 /usr/include
-26
-620
-Makefile
+31
+758
 app/driver.app.c
 app/driver_ioctl_.app.c
 driver.c
 my_driver.c
-my_driver.mod.c
+my_driver.h
+my_driver_generic.h
+/usr/include/linux/errno.h
+/usr/include/linux/fcntl.h
 /usr/include/linux/fs.h
+/usr/include/linux/gpio.h
 /usr/include/linux/ioctl.h
 /usr/include/linux/kernel.h
 /usr/include/linux/module.h
 /usr/include/linux/string.h
 /usr/include/linux/types.h
+/usr/include/stdint.h
 /usr/include/stdio.h
 /usr/include/unistd.h
 /usr/include/features.h
@@ -14593,6 +16995,7 @@ my_driver.mod.c
 /usr/include/linux/fscrypt.h
 /usr/include/linux/limits.h
 /usr/include/linux/mount.h
+/usr/include/linux/openat2.h
 /usr/include/linux/posix_types.h
 /usr/include/linux/sysinfo.h
 /usr/include/string.h
